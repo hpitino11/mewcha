@@ -1,0 +1,112 @@
+.page {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1.5rem;
+  min-height: calc(80vh - 68px);
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xl);
+  padding: 2.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  box-shadow: var(--shadow-md);
+}
+
+.header { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.kicker {
+  font-family: var(--font-body);
+  font-size: var(--text-kicker);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-primary-mid);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 2.75rem;
+  color: var(--color-primary-dark);
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+
+.form { display: flex; flex-direction: column; gap: 1.25rem; }
+
+.field { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.label {
+  font-size: var(--text-kicker);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.input {
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  font-size: var(--text-body);
+  color: var(--color-text);
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+  outline: none;
+  width: 100%;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(107, 112, 92, 0.15);
+}
+
+.input::placeholder { color: var(--color-primary-light); }
+
+.submit {
+  width: 100%;
+  background: var(--color-primary-dark);
+  color: var(--color-accent-cream);
+  font-family: var(--font-body);
+  font-size: var(--text-ui);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  margin-top: 0.25rem;
+  transition: background var(--t-base), transform var(--t-fast);
+}
+
+.submit:hover:not(:disabled) {
+  background: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.error {
+  font-size: 0.875rem;
+  color: var(--color-primary-dark);
+  background: rgba(107, 112, 92, 0.08);
+  border: 1px solid rgba(107, 112, 92, 0.2);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+}
+
+.footer {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.footer a { color: var(--color-primary); font-weight: 500; }

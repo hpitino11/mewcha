@@ -1,0 +1,284 @@
+.page {
+  flex: 1;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  width: 100%;
+  padding: 3rem 2rem 6rem;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: var(--text-ui);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+  margin-bottom: 3rem;
+  transition: color var(--t-fast), letter-spacing var(--t-base);
+}
+
+.back:hover {
+  color: var(--color-primary-dark);
+  letter-spacing: 0.08em;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+/* ── Left ── */
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.drinkMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.drinkBadges { display: flex; gap: 0.5rem; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--color-primary);
+  color: var(--color-accent-cream);
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--radius-pill);
+}
+
+.badgeSeasonal {
+  background: var(--color-primary);
+}
+
+.drinkName {
+  font-size: var(--text-display-sm);
+  color: var(--color-primary-dark);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+.drinkDesc {
+  font-size: var(--text-body-lg);
+  color: var(--color-text-muted);
+  line-height: 1.8;
+  max-width: 44ch;
+}
+
+.cupWrap {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xl);
+  height: 360px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1.5rem 2rem 2rem;
+  overflow: hidden;
+}
+
+.ritualSummary {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.ritualSummary em {
+  font-style: italic;
+  color: var(--color-primary);
+}
+
+/* ── Right: customizer ── */
+.right {
+  position: sticky;
+  top: 88px;
+}
+
+.customizer {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.custHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.custTitle {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--color-primary-dark);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.custPrice {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--color-primary-dark);
+  transition: color var(--t-base);
+}
+
+/* Option groups */
+.group {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.groupLabel {
+  font-family: var(--font-body);
+  font-size: var(--text-kicker);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.options {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.optionsWrap { flex-wrap: wrap; }
+
+.optBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  cursor: pointer;
+  transition:
+    background  var(--t-base),
+    border-color var(--t-base),
+    color       var(--t-fast),
+    transform   var(--t-fast);
+}
+
+.optBtn:hover {
+  border-color: var(--color-accent-sand);
+  color: var(--color-primary-dark);
+}
+
+.optBtn:active { transform: scale(0.97); }
+
+.optBtnActive {
+  background: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  color: var(--color-accent-cream);
+  font-weight: 500;
+}
+
+.optBtnActive:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-accent-cream);
+}
+
+.optPrice {
+  font-size: 0.72rem;
+  opacity: 0.65;
+}
+
+/* Add button */
+.addBtn {
+  width: 100%;
+  background: var(--color-primary-dark);
+  color: var(--color-accent-cream);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 1.125rem;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition:
+    background var(--t-base),
+    transform   var(--t-fast),
+    letter-spacing var(--t-base);
+  margin-top: 0.25rem;
+}
+
+.addBtn:hover:not(:disabled) {
+  background: var(--color-primary);
+  transform: translateY(-2px);
+  letter-spacing: 0.08em;
+}
+
+.addBtnDone {
+  background: var(--color-primary);
+  pointer-events: none;
+}
+
+/* Loading / Error states */
+.state {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.stateInner {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--color-text-muted);
+}
+
+.stateInner a { color: var(--color-primary); }
+
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .right { position: static; }
+  .cupWrap { height: 300px; }
+}
+
+@media (max-width: 640px) {
+  .page { padding: 1.5rem 1.25rem 5rem; }
+  .custHeader { flex-direction: column; gap: 0.5rem; }
+  .custPrice { font-size: 1.5rem; }
+}

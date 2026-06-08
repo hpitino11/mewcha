@@ -1,0 +1,20 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+.pending     { background: var(--color-accent-pale);   color: var(--color-primary-dark); }
+.in_progress { background: var(--color-accent-sand);   color: var(--color-primary-dark); }
+.ready       { background: var(--color-primary-dark);  color: var(--color-accent-cream); }
+.completed   { background: var(--color-border);        color: var(--color-text-muted); }
+.bestseller  { background: var(--color-primary);       color: var(--color-accent-cream); }
+.seasonal    { background: var(--color-primary);       color: #fff; }
+.neko_pick   { background: var(--color-accent-cream);  color: var(--color-primary);     border: 1px solid var(--color-primary-light); }

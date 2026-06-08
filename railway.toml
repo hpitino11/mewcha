@@ -1,0 +1,7 @@
+[build]
+builder = "NIXPACKS"
+
+# This file is for the API service.
+# In Railway, create two services:
+#   1. API service — points to /server, start command: node src/index.js
+#   2. Frontend service — points to /client, build: npm run build, output: dist

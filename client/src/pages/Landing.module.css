@@ -1,0 +1,1173 @@
+.page { flex: 1; }
+
+/* ═══════════════════════════════════════════════════════
+   HERO
+════════════════════════════════════════════════════════ */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-bg);
+  min-height: calc(100vh - 60px);
+}
+
+/* Dark olive right panel */
+.heroPanel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 52%;
+  height: 100%;
+  background: #3a3e30;
+  clip-path: polygon(6% 0%, 100% 0%, 100% 100%, 0% 100%);
+  z-index: 0;
+}
+
+/* Radial glow behind card area */
+.heroPanel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 58% 50%, rgba(134,173,100,0.07) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Faint MATCHA word — bottom-right of panel */
+.heroPanelBgWord {
+  position: absolute;
+  bottom: -0.12em;
+  right: -0.05em;
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 12vw, 10rem);
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  line-height: 0.85;
+  color: rgba(255,255,255,0.045);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Three thin horizontal rules across the panel */
+.heroPanelLines {
+  position: absolute;
+  left: 14%;
+  right: 0;
+  bottom: 28%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  pointer-events: none;
+}
+
+.heroPanelLines span {
+  display: block;
+  height: 1px;
+  background: rgba(255,255,255,0.055);
+}
+
+/* Vertical brand label — rotated along left edge of panel */
+.heroPanelVertLabel {
+  position: absolute;
+  bottom: 14%;
+  left: 10%;
+  font-family: var(--font-body);
+  font-size: 0.48rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.12);
+  white-space: nowrap;
+  transform: rotate(-90deg);
+  transform-origin: left bottom;
+  pointer-events: none;
+}
+
+/* Subtle noise on panel */
+.heroPanel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+/* Oversized faint background word */
+.heroBgWord {
+  position: absolute;
+  bottom: -0.08em;
+  left: -0.03em;
+  font-family: var(--font-display);
+  font-size: clamp(9rem, 22vw, 20rem);
+  font-weight: 300;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: var(--color-border);
+  opacity: 0.32;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  min-height: calc(100vh - 60px);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 5rem 2rem 4rem;
+  gap: 3rem;
+}
+
+/* ── Hero left content ── */
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  animation: hero-in 700ms cubic-bezier(.16,1,.3,1) 100ms both;
+}
+
+@keyframes hero-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.heroKicker { margin-bottom: -0.5rem; }
+
+.heroHeading {
+  font-size: var(--text-display-md);
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+  color: var(--color-primary-dark);
+}
+
+.heroHeading em {
+  font-style: italic;
+  color: var(--color-primary);
+}
+
+.heroSub {
+  font-size: var(--text-body-lg);
+  color: var(--color-text-muted);
+  line-height: 1.75;
+  max-width: 36ch;
+}
+
+.heroCta {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Primary CTA */
+.btnBuild {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--color-primary-dark);
+  color: var(--color-accent-cream);
+  font-family: var(--font-body);
+  font-size: var(--text-ui);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 1rem 2rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: background var(--t-base), transform var(--t-base), box-shadow var(--t-base);
+}
+
+.btnBuild:hover {
+  background: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(63,66,56,0.2);
+}
+
+.btnArrow {
+  display: inline-block;
+  transition: transform var(--t-base);
+}
+
+.btnBuild:hover .btnArrow { transform: translateX(4px); }
+
+.btnGhost {
+  font-family: var(--font-body);
+  font-size: var(--text-ui);
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+  position: relative;
+  padding-bottom: 2px;
+  transition: color var(--t-fast);
+}
+
+.btnGhost::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 1px;
+  width: 0;
+  background: var(--color-primary);
+  transition: width var(--t-base);
+}
+
+.btnGhost:hover { color: var(--color-primary-dark); }
+.btnGhost:hover::after { width: 100%; }
+
+.heroMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.heroMetaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: var(--font-body);
+  font-size: var(--text-kicker);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.heroMetaDot { color: var(--color-border); font-size: 0.875rem; }
+
+/* ── Hero right visual ── */
+.heroVisual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: hero-visual-in 800ms cubic-bezier(.16,1,.3,1) 250ms both;
+}
+
+@keyframes hero-visual-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Product card */
+.heroCupCard {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 288px;
+  background: #e5d7c4;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow:
+    0 48px 96px rgba(0,0,0,0.28),
+    0 16px 40px rgba(0,0,0,0.16),
+    0 0 0 1px rgba(255,255,255,0.07);
+  transition: transform var(--t-spring), box-shadow var(--t-spring);
+  margin-left: -1.25rem;
+}
+
+.heroCupCard:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 60px 110px rgba(0,0,0,0.30),
+    0 20px 48px rgba(0,0,0,0.18),
+    0 0 0 1px rgba(255,255,255,0.09);
+}
+
+/* Card top bar */
+.cupCardTop {
+  background: var(--color-primary-dark);
+  padding: 0.55rem 1rem 0.55rem 1.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.cupCardTopMeta {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.cupCardNum {
+  font-family: var(--font-body);
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(229,215,196,0.32);
+}
+
+.cupCardTagLine {
+  font-family: var(--font-body);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(229,215,196,0.68);
+}
+
+.nekoBadge {
+  font-family: var(--font-body);
+  font-size: 0.48rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-primary-dark);
+  background: var(--color-accent);
+  padding: 0.18rem 0.5rem;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+/* Cup illustration */
+.heroCupPreview {
+  background: #d1c4b2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 2rem 2rem 1rem;
+  height: 256px;
+  position: relative;
+}
+
+.heroCupPreview::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 62% 55% at 50% 58%, rgba(100,160,100,0.16) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.heroCupSvg {
+  width: 126px;
+  height: 173px;
+  overflow: visible;
+  filter: drop-shadow(0 14px 28px rgba(0,0,0,0.20));
+  position: relative;
+  z-index: 1;
+}
+
+/* Product label row */
+.cupCardLabel {
+  background: #e5d7c4;
+  padding: 0.875rem 1.125rem 0.625rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  border-top: 1px solid #c8b48e;
+}
+
+.cupCardLabelLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.cupCardName {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-style: italic;
+  color: #3f4238;
+  line-height: 1.15;
+}
+
+.cupCardIngredients {
+  font-family: var(--font-body);
+  font-size: 0.58rem;
+  color: #7a7060;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+
+.cupCardPrice {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: #3f4238;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Footer strip / CTA */
+.cupCardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ddd0be;
+  padding: 0.5rem 1.125rem;
+  border-top: 1px solid #c8b48e;
+  text-decoration: none;
+  transition: background var(--t-fast);
+}
+
+.cupCardFooter:hover { background: #cfbb99; }
+
+.cupCardFooterText {
+  font-family: var(--font-body);
+  font-size: 0.48rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #7a7060;
+}
+
+.cupCardFooterCta {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #3f4238;
+  white-space: nowrap;
+}
+
+/* ── Mini collateral: menu ticket ── */
+.heroMiniMenu {
+  position: absolute;
+  top: 20%;
+  left: -108px;
+  width: 136px;
+  background: var(--color-primary-dark);
+  border-radius: 8px;
+  padding: 0.875rem 1rem;
+  transform: rotate(-2deg);
+  z-index: 2;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.04);
+  animation: ticket-in 420ms var(--ease-out) 380ms both;
+}
+
+@keyframes ticket-in {
+  from { opacity: 0; transform: rotate(-2deg) translateX(-10px); }
+  to   { opacity: 1; transform: rotate(-2deg); }
+}
+
+.miniMenuHead {
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-style: italic;
+  color: #e5d7c4;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+
+.miniMenuDash {
+  font-size: 0.44rem;
+  color: rgba(255,255,255,0.1);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.4rem;
+}
+
+.miniMenuItems {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.miniMenuRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-body);
+  font-size: 0.5625rem;
+  color: rgba(229,215,196,0.58);
+  letter-spacing: 0.01em;
+}
+
+/* ── Mini collateral: receipt ── */
+.heroMiniReceipt {
+  position: absolute;
+  bottom: 5%;
+  right: -76px;
+  width: 116px;
+  background: #ede7d9;
+  border-radius: 8px;
+  padding: 0.75rem 0.875rem;
+  transform: rotate(2.5deg);
+  z-index: 2;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.18), 0 0 0 1px rgba(200,180,142,0.25);
+  animation: receipt-in 420ms var(--ease-out) 520ms both;
+}
+
+@keyframes receipt-in {
+  from { opacity: 0; transform: rotate(2.5deg) translateX(10px); }
+  to   { opacity: 1; transform: rotate(2.5deg); }
+}
+
+.miniReceiptHead {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-body);
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #3f4238;
+  margin-bottom: 0.3rem;
+}
+
+.miniReceiptDash {
+  font-size: 0.44rem;
+  color: #a5a58d;
+  letter-spacing: 0.03em;
+  margin: 0.25rem 0;
+}
+
+.miniReceiptRows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.miniReceiptRows span {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.5625rem;
+  color: #3f4238;
+}
+
+.miniReceiptFooter {
+  font-family: var(--font-body);
+  font-size: 0.5rem;
+  color: #6b705c;
+  letter-spacing: 0.06em;
+}
+
+/* Circular neko-approved sticker */
+.heroSticker {
+  position: absolute;
+  top: 1.5rem;
+  right: 0.5rem;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  border: 1.5px solid rgba(255,255,255,0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  animation: sticker-in 600ms cubic-bezier(.34,1.56,.64,1) 600ms both;
+  z-index: 2;
+}
+
+@keyframes sticker-in {
+  from { opacity: 0; transform: rotate(-12deg) scale(0.7); }
+  to   { opacity: 1; transform: rotate(-6deg) scale(1); }
+}
+
+.heroStickerLine {
+  font-family: var(--font-body);
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-primary-dark);
+  line-height: 1;
+}
+
+.heroStickerDivider {
+  font-size: 0.5rem;
+  color: var(--color-primary-dark);
+  opacity: 0.55;
+  line-height: 1.4;
+}
+
+/* Ingredient provenance tag */
+.heroIngredientTag {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255,250,247,0.10);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius-pill);
+  padding: 0.35rem 0.875rem;
+  font-family: var(--font-body);
+  font-size: 0.5625rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  white-space: nowrap;
+  backdrop-filter: blur(6px);
+  animation: tag-in 500ms ease 800ms both;
+  z-index: 2;
+}
+
+@keyframes tag-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(6px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.heroTagDot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+/* Vertical label alongside card */
+.heroVertLabel {
+  position: absolute;
+  right: -1.5rem;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  transform-origin: center;
+  font-family: var(--font-body);
+  font-size: 0.5625rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.18);
+  white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════════════════════
+   MARQUEE
+════════════════════════════════════════════════════════ */
+.marqueeWrap {
+  overflow: hidden;
+  background: var(--color-primary-dark);
+  border-top: 1px solid rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  padding: 0.875rem 0;
+}
+
+.marqueeTrack {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: marquee 36s linear infinite;
+}
+
+.marqueeItem {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0 1.5rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  color: var(--color-primary-mid);
+  white-space: nowrap;
+}
+
+.marqueeDot {
+  display: block;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  opacity: 0.55;
+  flex-shrink: 0;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ═══════════════════════════════════════════════════════
+   01 / FEATURED DRINKS
+════════════════════════════════════════════════════════ */
+.featured {
+  background: #626951;
+  padding: 6.5rem 2rem;
+  position: relative;
+}
+
+/* Paper grain texture */
+.featured::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.featuredInner { position: relative; z-index: 1; }
+
+.featuredInner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.featuredHead {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.featuredTitle {
+  font-size: var(--text-display-sm);
+  color: #e5d7c4;
+  letter-spacing: -0.025em;
+}
+
+.featuredTitle em { font-style: italic; color: rgba(229,215,196,0.7); }
+
+.featuredSub {
+  font-size: var(--text-body);
+  color: rgba(229,215,196,0.65);
+}
+
+/* Kicker override for use on green bg */
+.kickerLight {
+  color: rgba(229,215,196,0.55) !important;
+}
+
+.kickerLight > * {
+  color: rgba(229,215,196,0.55) !important;
+}
+
+/* Asymmetric grid: large left, two small right */
+.featuredGrid {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1.125rem;
+  min-height: 460px;
+}
+
+/* ── Featured card base ── */
+.featCard {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+  color: inherit;
+  background: #e5d7c4;
+  border: 1px solid rgba(255,255,255,0.18);
+  padding: 1.75rem;
+  transition: transform var(--t-spring), box-shadow var(--t-spring);
+}
+
+.featCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Large card spans full height */
+.featCardLarge {
+  grid-row: 1 / 3;
+  padding: 2.25rem;
+}
+
+/* Olive card */
+.featCardOlive {
+  background: var(--color-primary-dark);
+  border-color: transparent;
+}
+
+.featCardOlive:hover {
+  box-shadow: 0 24px 64px rgba(0,0,0,0.28), 0 8px 24px rgba(0,0,0,0.16);
+}
+
+/* ── Badge ── */
+.featBadge {
+  align-self: flex-start;
+  font-family: var(--font-body);
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-primary-dark);
+  background: var(--color-accent-sand);
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--radius-pill);
+  margin-bottom: 0.5rem;
+}
+
+.featBadgeLight {
+  color: var(--color-primary-dark);
+  background: var(--color-accent);
+}
+
+/* ── Card content ── */
+.featCardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.featCat {
+  font-size: var(--text-kicker);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-primary-mid);
+}
+
+.featCatLight { color: rgba(165,165,141,0.7); }
+
+.featName {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2vw, 1.625rem);
+  color: var(--color-primary-dark);
+  line-height: 1.15;
+  transition: font-style var(--t-fast);
+}
+
+.featCard:hover .featName { font-style: italic; }
+
+.featNameLight { color: var(--color-accent-cream); }
+
+.featDesc {
+  font-size: var(--text-body);
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  max-width: 40ch;
+}
+
+.featDescLight { color: rgba(165,165,141,0.75); }
+
+/* ── Card footer ── */
+.featCardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.featCardOlive .featCardFooter {
+  border-top-color: rgba(255,255,255,0.08);
+}
+
+.featPrice {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--color-primary-dark);
+}
+
+.featPriceLight { color: var(--color-accent-cream); }
+
+.featCta {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: var(--text-kicker);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity var(--t-base), transform var(--t-base), color var(--t-fast);
+}
+
+.featCtaLight { color: var(--color-accent); }
+
+.featCard:hover .featCta {
+  opacity: 1;
+  transform: none;
+}
+
+.featPaw { flex-shrink: 0; }
+
+/* ── Skeleton ── */
+.skel {
+  background: linear-gradient(90deg, var(--color-border) 25%, var(--color-border-light) 50%, var(--color-border) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite;
+  border-radius: 3px;
+}
+
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+/* Category row with liquid dot */
+.featCatRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: -0.125rem;
+}
+
+.featLiquidDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  opacity: 0.85;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.18);
+}
+
+/* Drink tags */
+.featTagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin-top: 0.625rem;
+}
+
+.featTag {
+  font-family: var(--font-body);
+  font-size: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-pill);
+}
+
+.featTagOlive {
+  color: rgba(255,232,214,0.7);
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.1);
+}
+
+/* ═══════════════════════════════════════════════════════
+   05 / RITUAL SECTION
+════════════════════════════════════════════════════════ */
+.ritual {
+  background: var(--color-surface);
+  padding: 7rem 2rem;
+  position: relative;
+}
+
+.ritual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ritualInner { position: relative; z-index: 1; }
+
+.ritualInner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+.ritualText {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.ritualTitle {
+  font-size: var(--text-display-sm);
+  color: var(--color-primary-dark);
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+.ritualTitle em { font-style: italic; color: var(--color-primary); }
+
+.ritualBody {
+  font-size: var(--text-body-lg);
+  color: var(--color-text-muted);
+  line-height: 1.82;
+  max-width: 44ch;
+}
+
+.pillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.pillar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.pillarNum {
+  font-size: var(--text-kicker);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--color-text-subtle);
+}
+
+.pillarTitle {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  color: var(--color-primary-dark);
+  line-height: 1.2;
+}
+
+.pillarBody {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+/* Quote panel */
+.quotePanel {
+  background: var(--color-primary-dark);
+  border-radius: var(--radius-xl);
+  padding: 3.5rem 3rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.quoteMark {
+  position: absolute;
+  top: -1.5rem;
+  left: 1.75rem;
+  font-family: var(--font-display);
+  font-size: 9rem;
+  line-height: 1;
+  color: rgba(255,255,255,0.06);
+  pointer-events: none;
+  user-select: none;
+}
+
+.quoteText {
+  font-family: var(--font-display);
+  font-size: clamp(1.625rem, 3vw, 2.5rem);
+  font-weight: 300;
+  font-style: normal;
+  color: var(--color-accent-cream);
+  line-height: 1.25;
+  position: relative;
+  z-index: 1;
+}
+
+.quoteText em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.quoteDivider {
+  width: 2.5rem;
+  height: 1px;
+  background: rgba(255,255,255,0.15);
+}
+
+.quoteCredit {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-primary-mid);
+}
+
+/* Brand detail rows */
+.quoteDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 0.5rem;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding-top: 1rem;
+}
+
+.quoteDetailRow {
+  display: grid;
+  grid-template-columns: 1.75rem 1fr auto;
+  gap: 0.5rem;
+  align-items: baseline;
+  padding: 0.375rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.quoteDetailNum {
+  font-family: var(--font-body);
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.2);
+}
+
+.quoteDetailLabel {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-primary-mid);
+}
+
+.quoteDetailVal {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-style: italic;
+  color: var(--color-accent-cream);
+  opacity: 0.8;
+}
+
+.quotePaws {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .heroInner {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 4rem 1.5rem;
+  }
+
+  .heroPanel { display: none; }
+  .heroBgWord { font-size: clamp(6rem, 18vw, 10rem); }
+  .heroVisual { justify-content: flex-start; }
+  .heroCupCard { max-width: 280px; margin-left: 0; }
+  .heroVertLabel { display: none; }
+  .heroMiniMenu { display: none; }
+  .heroMiniReceipt { display: none; }
+
+  .featuredGrid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    min-height: auto;
+  }
+
+  .featCardLarge { grid-row: auto; }
+
+  .ritualInner { grid-template-columns: 1fr; gap: 3rem; }
+  .pillars { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .heroCta { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .heroMeta { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .heroMetaDot { display: none; }
+  .featured { padding: 4rem 1.25rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marqueeTrack { animation: none; }
+}

@@ -1,0 +1,120 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: #3f4238;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.exiting {
+  animation: wipe-up 480ms cubic-bezier(.4, 0, .8, 1) forwards;
+}
+
+@keyframes wipe-up {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-102%); }
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.25rem;
+}
+
+.cupSvg {
+  width: 130px;
+  height: 179px;
+  overflow: visible;
+  animation: cup-in 500ms cubic-bezier(.16, 1, .3, 1) both;
+}
+
+@keyframes cup-in {
+  from { opacity: 0; transform: translateY(20px) scale(0.92); }
+  to   { opacity: 1; transform: none; }
+}
+
+.cupPart {
+  animation: cup-in 500ms cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.liquid {
+  transform-origin: 50% 100%;
+  transform: scaleY(0);
+  animation: liquid-rise 1000ms cubic-bezier(.22, 1, .36, 1) 420ms forwards;
+}
+
+@keyframes liquid-rise {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+.liquidFoam {
+  opacity: 0;
+  transform-origin: 50% 100%;
+  transform: scaleY(0);
+  animation:
+    liquid-rise 1000ms cubic-bezier(.22, 1, .36, 1) 420ms forwards,
+    foam-in 280ms ease 1380ms forwards;
+}
+
+@keyframes foam-in {
+  to { opacity: 1; }
+}
+
+.liquidSurface {
+  opacity: 0;
+  animation: surface-in 280ms ease 1400ms forwards;
+}
+
+@keyframes surface-in {
+  to { opacity: 1; }
+}
+
+.pearl {
+  opacity: 0;
+  animation: pearl-fall 420ms cubic-bezier(.3, 1.4, .5, 1) var(--pearl-delay, 1100ms) forwards;
+}
+
+@keyframes pearl-fall {
+  0%   { opacity: 0; transform: translateY(-28px); }
+  60%  { opacity: 1; transform: translateY(4px); }
+  80%  { transform: translateY(-2px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.cupStripe {
+  opacity: 0;
+  animation: stripe-in 280ms ease 1420ms forwards;
+}
+
+@keyframes stripe-in {
+  to { opacity: 1; }
+}
+
+.textBlock {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 420ms cubic-bezier(.16, 1, .3, 1),
+    transform 420ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.textVisible {
+  opacity: 1;
+  transform: none;
+}
+
+.label {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #a5a58d;
+}
