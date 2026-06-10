@@ -6,7 +6,7 @@
 .hero {
   position: relative;
   overflow: hidden;
-  background: var(--color-bg);
+  background: #626951;
   min-height: calc(100vh - 60px);
 }
 
@@ -102,8 +102,8 @@
   font-weight: 300;
   line-height: 0.85;
   letter-spacing: -0.04em;
-  color: var(--color-border);
-  opacity: 0.32;
+  color: rgba(255,255,255,0.07);
+  opacity: 1;
   pointer-events: none;
   user-select: none;
   z-index: 0;
@@ -141,17 +141,17 @@
   font-size: var(--text-display-md);
   line-height: 0.96;
   letter-spacing: -0.03em;
-  color: var(--color-primary-dark);
+  color: var(--color-accent-cream);
 }
 
 .heroHeading em {
   font-style: italic;
-  color: var(--color-primary);
+  color: var(--color-accent);
 }
 
 .heroSub {
   font-size: var(--text-body-lg);
-  color: var(--color-text-muted);
+  color: rgba(229,215,196,0.72);
   line-height: 1.75;
   max-width: 36ch;
 }
@@ -197,7 +197,7 @@
 .btnGhost {
   font-family: var(--font-body);
   font-size: var(--text-ui);
-  color: var(--color-text-muted);
+  color: rgba(229,215,196,0.65);
   letter-spacing: 0.04em;
   position: relative;
   padding-bottom: 2px;
@@ -210,11 +210,11 @@
   bottom: 0; left: 0;
   height: 1px;
   width: 0;
-  background: var(--color-primary);
+  background: var(--color-accent);
   transition: width var(--t-base);
 }
 
-.btnGhost:hover { color: var(--color-primary-dark); }
+.btnGhost:hover { color: var(--color-accent-cream); }
 .btnGhost:hover::after { width: 100%; }
 
 .heroMeta {
@@ -233,10 +233,10 @@
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--color-text-subtle);
+  color: rgba(229,215,196,0.5);
 }
 
-.heroMetaDot { color: var(--color-border); font-size: 0.875rem; }
+.heroMetaDot { color: rgba(229,215,196,0.25); font-size: 0.875rem; }
 
 /* ── Hero right visual ── */
 .heroVisual {
@@ -682,7 +682,7 @@
    01 / FEATURED DRINKS
 ════════════════════════════════════════════════════════ */
 .featured {
-  background: #626951;
+  background: #3a2215;
   padding: 6.5rem 2rem;
   position: relative;
 }
@@ -774,7 +774,7 @@
 
 /* Olive card */
 .featCardOlive {
-  background: var(--color-primary-dark);
+  background: #7a8c68;
   border-color: transparent;
 }
 
