@@ -116,12 +116,6 @@ function getSlot(idx: number, active: number, total: number): number {
   return raw > Math.floor(total / 2) ? raw - total : raw;
 }
 
-interface SlotAnimate {
-  x: number | string; y: number | string;
-  scale: number; opacity: number;
-  zIndex: number;
-}
-
 function slotAnimate(slot: number): TargetAndTransition {
   if (slot === 0)  return { x: '12vw',  y: '-8vh',  scale: 1.00, opacity: 1,    zIndex: 5 };
   if (slot === 1)  return { x: '30vw',  y: '-3vh',  scale: 0.62, opacity: 0.60, zIndex: 4 };
@@ -134,10 +128,10 @@ function slotAnimate(slot: number): TargetAndTransition {
 
 const CUP_SPRING = { type: 'spring', stiffness: 210, damping: 28, mass: 0.85 } as const;
 
-const textVar = {
+const textVar: Variants = {
   initial: { opacity: 0, y: 26 },
-  animate: { opacity: 1, y: 0,   transition: { duration: 0.52, ease: [0.16, 1, 0.3, 1] as number[] } },
-  exit:    { opacity: 0, y: -16, transition: { duration: 0.26, ease: [0.4, 0, 1, 1]    as number[] } },
+  animate: { opacity: 1, y: 0,   transition: { duration: 0.52, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
+  exit:    { opacity: 0, y: -16, transition: { duration: 0.26, ease: [0.4, 0, 1, 1]    as [number, number, number, number] } },
 };
 
 /* ── Component ───────────────────────────────────────── */
