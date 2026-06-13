@@ -1,0 +1,390 @@
+/* ═══════════════════════════════════════════════════════
+   DRINK CAROUSEL HERO
+   All sizing is fluid — no hardcoded px layout values.
+════════════════════════════════════════════════════════ */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100svh - var(--nav-height));
+}
+
+.noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.045;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Flavour pills ─────────────────────────────────── */
+.pills {
+  position: absolute;
+  top: var(--fluid-md);
+  right: var(--fluid-page);
+  display: flex;
+  gap: 0.4rem;
+  z-index: 10;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.pill {
+  font-family: var(--font-body);
+  font-size: clamp(0.5rem, 1vw, 0.65rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.3rem clamp(0.6rem, 1.2vw, 0.9rem);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.42);
+  transition: background 220ms var(--ease-out), color 220ms var(--ease-out),
+    border-color 220ms var(--ease-out);
+}
+
+.pill:hover {
+  background: rgba(255, 255, 255, 0.13);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* ── Main layout ───────────────────────────────────── */
+.inner {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  min-height: calc(100svh - var(--nav-height) - clamp(3rem, 6vh, 6rem));
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: clamp(2rem, 5vh, 4rem) var(--fluid-page) clamp(1rem, 3vh, 2.5rem);
+}
+
+/* ── Text column ───────────────────────────────────── */
+.textCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fluid-lg);
+  position: relative;
+  z-index: 5;
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.875rem, 2vw, 1.5rem);
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-body);
+  font-size: clamp(0.5rem, 1vw, 0.65rem);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.counterRule {
+  display: block;
+  width: clamp(16px, 2vw, 26px);
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+}
+
+.drinkLabel {
+  font-family: var(--font-body);
+  font-size: clamp(0.5rem, 1vw, 0.65rem);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.25rem clamp(0.5rem, 1vw, 0.75rem);
+  border-radius: var(--radius-sm);
+  border: 1px solid;
+  align-self: flex-start;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5.5vw, 5.5rem);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+  color: var(--color-accent-cream);
+  margin: 0;
+}
+
+.tagline {
+  font-family: var(--font-body);
+  font-size: clamp(0.6rem, 1.1vw, 0.75rem);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.description {
+  font-size: clamp(0.875rem, 1.4vw, 1rem);
+  line-height: 1.8;
+  color: rgba(229, 215, 196, 0.65);
+  max-width: 38ch;
+  min-height: 5.8em; /* 3 lines — prevents layout shift when bio length varies */
+  flex-shrink: 0;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+  flex-wrap: wrap;
+}
+
+.price {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.5vw, 1.875rem);
+  font-weight: 300;
+  line-height: 1;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: clamp(0.6rem, 1.1vw, 0.75rem);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: clamp(0.7rem, 1.5vh, 1rem) clamp(1.25rem, 2.5vw, 1.875rem);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out),
+    box-shadow 200ms var(--ease-out);
+}
+
+.btnPrimary:hover {
+  opacity: 0.88;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+}
+
+.btnGhost {
+  font-family: var(--font-body);
+  font-size: clamp(0.6rem, 1.1vw, 0.75rem);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: rgba(229, 215, 196, 0.5);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(229, 215, 196, 0.18);
+  padding-bottom: 2px;
+  transition: color 200ms var(--ease-out), border-color 200ms var(--ease-out);
+}
+
+.btnGhost:hover {
+  color: rgba(229, 215, 196, 0.85);
+  border-color: rgba(229, 215, 196, 0.44);
+}
+
+/* ── Controls ──────────────────────────────────────── */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.875rem, 2vw, 1.5rem);
+}
+
+.navBtn {
+  width: clamp(36px, 4vw, 48px);
+  height: clamp(36px, 4vw, 48px);
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 180ms var(--ease-out), color 180ms var(--ease-out),
+    border-color 180ms var(--ease-out);
+}
+
+.navBtn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.92);
+  border-color: rgba(255, 255, 255, 0.32);
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 0;
+  transition: width 280ms var(--ease-out), border-radius 280ms var(--ease-out),
+    background 280ms var(--ease-out);
+}
+
+.dotActive {
+  width: 20px;
+  border-radius: 3px;
+}
+
+/* ── Image column — absolute, fills the right 62% of the hero at every viewport width ── */
+.cupsCol {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 62%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/*
+ * Track dimensions are fluid via CSS custom properties.
+ * Slot centering uses calc() on those same vars so margins
+ * always equal exactly half the slot size — no px magic.
+ */
+.cupsTrack {
+  --slot-w: clamp(260px, 30vw, 480px);
+  --slot-h: clamp(360px, 42vw, 660px);
+
+  position: relative;
+  width: var(--slot-w);
+  height: var(--slot-h);
+  filter: drop-shadow(0 clamp(20px, 4vh, 40px) clamp(32px, 6vh, 60px) rgba(0, 0, 0, 0.38))
+          drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
+}
+
+.cupSlot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--slot-w, 280px);
+  height: var(--slot-h, 400px);
+  margin-left: calc(var(--slot-w, 280px) / -2);
+  margin-top: calc(var(--slot-h, 400px) / -2);
+  will-change: transform, opacity;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.drinkImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  image-rendering: auto;
+}
+
+.drinkStamp {
+  position: absolute;
+  bottom: 28%;
+  right: 6%;
+  z-index: 10;
+  width: clamp(64px, 6.5vw, 86px);
+  height: clamp(64px, 6.5vw, 86px);
+  border-radius: 50%;
+  border: 1.5px dashed rgba(255, 255, 255, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  background: rgba(10, 6, 4, 0.32);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.drinkStamp span {
+  font-family: var(--font-body);
+  font-size: clamp(0.36rem, 0.65vw, 0.48rem);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.88);
+  text-align: center;
+  line-height: 1.45;
+  max-width: 75%;
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE
+   Only 2 breakpoints — fluid values handle everything in between.
+════════════════════════════════════════════════════════ */
+
+/* Stack vertically when the text column gets too narrow */
+@media (max-width: 860px) {
+  .cupsCol {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 52vh;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .cupsTrack {
+    --slot-w: clamp(200px, 44vw, 380px);
+    --slot-h: clamp(280px, 62vw, 530px);
+  }
+
+  .inner {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: 52vh;
+    padding-bottom: clamp(3rem, 6vh, 5rem);
+  }
+
+  .textCol {
+    width: 100%;
+    max-width: 52ch;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+  .cupsCol {
+    height: 46vh;
+  }
+
+  .cupsTrack {
+    --slot-w: clamp(160px, 56vw, 280px);
+    --slot-h: clamp(220px, 78vw, 390px);
+  }
+
+  .inner {
+    padding-top: 46vh;
+  }
+
+  .pills {
+    position: static;
+    justify-content: flex-start;
+    margin-top: var(--fluid-sm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero { transition: none; }
+  .dot, .dotActive { transition: none; }
+  .btnPrimary { transition: none; }
+}

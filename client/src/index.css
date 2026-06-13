@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Instrument+Sans:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&family=Instrument+Sans:wght@400;500;600;700&display=swap');
 
 /* ─── Color tokens ──────────────────────────────────────── */
 :root {
@@ -37,7 +37,7 @@
   --text-display-md:  clamp(3rem, 7vw, 6.5rem);
   --text-display-lg:  clamp(4rem, 11vw, 10rem);
 
-  /* ─── Spacing ──────────────────────────────────────────── */
+  /* ─── Spacing (fixed) ──────────────────────────────────── */
   --space-1:  4px;
   --space-2:  8px;
   --space-3:  12px;
@@ -50,6 +50,18 @@
   --space-16: 64px;
   --space-20: 80px;
   --space-24: 96px;
+
+  /* ─── Fluid spacing (clamp-based, use these for layouts) ── */
+  --fluid-xs:   clamp(0.5rem,  1.5vw,  1rem);
+  --fluid-sm:   clamp(0.75rem, 2vw,    1.5rem);
+  --fluid-md:   clamp(1.25rem, 3vw,    2.5rem);
+  --fluid-lg:   clamp(2rem,    5vw,    4rem);
+  --fluid-xl:   clamp(3rem,    7vw,    6rem);
+  --fluid-2xl:  clamp(4.5rem,  9vw,    8rem);
+  --fluid-page: clamp(1rem,    4vw,    2.5rem);
+
+  /* ─── Site chrome ───────────────────────────────────────── */
+  --nav-height: 60px;
 
   /* ─── Radii ────────────────────────────────────────────── */
   --radius-xs: 2px;
@@ -107,7 +119,7 @@ body::after {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.1;
   color: var(--color-primary-dark);
 }

@@ -187,7 +187,7 @@ export default function DrinkDetail() {
                   Added to your ritual
                 </>
               ) : (
-                <>add to ritual — ${total.toFixed(2)}</>
+                <>add to ritual · ${total.toFixed(2)}</>
               )}
             </button>
           </div>

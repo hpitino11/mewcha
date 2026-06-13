@@ -3,8 +3,8 @@
   top: 0;
   z-index: 100;
   width: 100%;
-  background: #3a3e30;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  background: var(--color-accent-cream);
+  border-bottom: 1px solid var(--color-border-light);
   transition:
     background 320ms var(--ease-out),
     border-color 320ms var(--ease-out),
@@ -12,10 +12,10 @@
 }
 
 .scrolled {
-  background: rgba(58, 62, 48, 0.9);
+  background: rgba(229, 215, 196, 0.88);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border-bottom-color: rgba(255,255,255,0.08);
+  border-bottom-color: var(--color-border);
 }
 
 .nav { width: 100%; }
@@ -23,12 +23,12 @@
 .inner {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 2rem;
-  height: 60px;
+  padding: 0 var(--fluid-page);
+  height: var(--nav-height);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2rem;
+  gap: var(--fluid-md);
 }
 
 /* ── Logo ── */
@@ -40,14 +40,14 @@
   flex-shrink: 0;
 }
 
-.logoIcon { flex-shrink: 0; }
+.logoIcon { flex-shrink: 0; width: 56px; height: 56px; object-fit: contain; }
 
 .logoText {
   font-family: var(--font-display);
   font-size: 1.375rem;
   font-weight: 400;
   font-style: italic;
-  color: var(--color-accent-cream);
+  color: var(--color-primary-dark);
   letter-spacing: 0.01em;
   line-height: 1;
 }
@@ -68,12 +68,12 @@
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(229,215,196,0.6);
+  color: var(--color-text-muted);
   position: relative;
   transition: color var(--t-fast);
 }
 
-.link:hover { color: var(--color-accent-cream); }
+.link:hover { color: var(--color-primary-dark); }
 
 /* Dot indicator under active link */
 .link::after {
@@ -90,7 +90,7 @@
 }
 
 .linkActive {
-  color: var(--color-accent-cream);
+  color: var(--color-primary-dark);
 }
 
 .linkActive::after {
@@ -107,7 +107,7 @@
 .divider {
   width: 1px;
   height: 16px;
-  background: rgba(255,255,255,0.15);
+  background: var(--color-border);
   opacity: 1;
 }
 
@@ -116,12 +116,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(229,215,196,0.6);
+  color: var(--color-text-muted);
   transition: color var(--t-fast);
   padding: 2px;
 }
 
-.cartBtn:hover { color: var(--color-accent-cream); }
+.cartBtn:hover { color: var(--color-primary-dark); }
 
 .cartBadge {
   position: absolute;
@@ -154,7 +154,7 @@
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(229,215,196,0.6);
+  color: var(--color-text-muted);
   background: none;
   border: none;
   cursor: pointer;
@@ -162,9 +162,8 @@
   transition: color var(--t-fast);
 }
 
-.authBtn:hover { color: var(--color-accent-cream); }
+.authBtn:hover { color: var(--color-primary-dark); }
 
 @media (max-width: 640px) {
-  .inner { padding: 0 1.25rem; gap: 1rem; }
-  .links { gap: 1.25rem; }
+  .links { gap: clamp(0.875rem, 3vw, 1.5rem); }
 }

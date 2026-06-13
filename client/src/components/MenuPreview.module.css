@@ -1,321 +1,287 @@
 .section {
-  background: var(--color-surface);
-  padding: 7rem 2rem;
+  background: #1a1712;
+  padding: var(--fluid-xl) var(--fluid-page);
   position: relative;
 }
 
+.section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .inner {
-  max-width: 1000px;
+  position: relative;
+  z-index: 1;
+  max-width: var(--max-width);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 3.5rem;
+  gap: var(--fluid-lg);
 }
 
-.heading {
+/* ── Head ── */
+.head {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.875rem;
+  padding-bottom: var(--fluid-md);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
-.sectionLabel {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: 'Instrument Sans', sans-serif;
-  font-size: 0.6875rem;
-  color: var(--color-text-subtle);
-  letter-spacing: 0.14em;
-}
-
-.num, .label {
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
+.kickerLight {
+  color: rgba(229,215,196,0.45) !important;
 }
 
 .title {
-  font-family: 'Fraunces', Georgia, serif;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 300;
-  color: var(--color-primary-dark);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-}
-
-.title em {
-  font-style: italic;
-  color: var(--color-primary);
-}
-
-.cards {
-  display: flex;
-  gap: 2rem;
-  align-items: flex-start;
-}
-
-/* ── Physical menu card ── */
-.menuCard {
-  flex: 1.6;
-  background: #3f4238;
-  border-radius: 14px;
-  padding: 2rem 2rem 1.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  box-shadow:
-    0 32px 64px rgba(63,66,56,0.18),
-    0 8px 24px rgba(63,66,56,0.10);
-  transform: rotate(-0.6deg);
-  transition: transform var(--t-spring), box-shadow var(--t-spring);
-}
-
-.menuCard:hover {
-  transform: rotate(0deg) translateY(-4px);
-  box-shadow:
-    0 40px 80px rgba(63,66,56,0.22),
-    0 10px 28px rgba(63,66,56,0.12);
-}
-
-.menuCardHeader {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.menuCardName {
-  font-family: 'Fraunces', Georgia, serif;
-  font-size: 1.625rem;
+  font-family: var(--font-display);
+  font-size: var(--text-display-md);
   font-weight: 400;
-  font-style: italic;
   color: #e5d7c4;
-  letter-spacing: 0.02em;
-  line-height: 1;
+  letter-spacing: -0.03em;
+  line-height: 1.0;
 }
 
-.menuCardSub {
-  font-family: 'Instrument Sans', sans-serif;
-  font-size: 0.6rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #6b705c;
+
+.sub {
+  font-size: var(--text-body);
+  color: rgba(229,215,196,0.45);
+  max-width: 50ch;
 }
 
-.menuDivider {
-  height: 1px;
-  background: rgba(255,255,255,0.07);
-}
-
-.menuRows {
-  display: flex;
-  flex-direction: column;
-  gap: 0.625rem;
-}
-
-.menuRow {
-  display: grid;
-  grid-template-columns: 4.5rem 1fr auto auto;
-  gap: 0.5rem;
-  align-items: baseline;
-}
-
-.menuRowCat {
-  font-family: 'Instrument Sans', sans-serif;
-  font-size: 0.5625rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #6b705c;
-}
-
-.menuRowName {
-  font-family: 'Instrument Sans', sans-serif;
-  font-size: 0.8125rem;
-  color: #cfbb99;
-}
-
-.menuRowDots {
-  flex: 1;
-  border-bottom: 1px dotted rgba(255,255,255,0.08);
-  margin-bottom: 3px;
-}
-
-.menuRowPrice {
-  font-family: 'Fraunces', Georgia, serif;
-  font-size: 0.9375rem;
-  color: #e5d7c4;
-  font-weight: 400;
-}
-
-.menuCardFooter {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  font-family: 'Instrument Sans', sans-serif;
-  font-size: 0.5625rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #575c4d;
-}
-
-/* ── Receipt card ── */
-.receiptCard {
-  flex: 1;
-  background: #e5d7c4;
-  border-radius: 12px;
-  padding: 1.75rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  box-shadow:
-    0 24px 50px rgba(63,66,56,0.10),
-    0 6px 16px rgba(63,66,56,0.06);
-  transform: rotate(1.2deg);
-  transition: transform var(--t-spring), box-shadow var(--t-spring);
-  font-family: 'Instrument Sans', monospace;
-}
-
-.receiptCard:hover {
-  transform: rotate(0deg) translateY(-4px);
-}
-
-.receiptHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-
-.receiptHeaderRight {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.125rem;
-}
-
-.receiptOrderNum {
-  font-family: 'Fraunces', Georgia, serif;
-  font-size: 0.75rem;
-  font-style: italic;
-  color: #a5a58d;
-}
-
-.receiptTitle {
-  font-family: 'Fraunces', Georgia, serif;
-  font-size: 1.125rem;
-  font-style: italic;
-  color: #3f4238;
-}
-
-.receiptDate {
-  font-size: 0.6875rem;
-  color: #a5a58d;
-  letter-spacing: 0.06em;
-}
-
-.receiptDivider {
-  font-size: 0.6rem;
-  letter-spacing: 0.04em;
-  color: #cfbb99;
+/* ── Menu container (catGrid + addons unified) ── */
+.menuContainer {
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: var(--radius-lg);
   overflow: hidden;
 }
 
-.receiptRows {
+/* ── Category grid ── */
+.catGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+.catCol {
+  padding: clamp(1rem, 2vw, 1.875rem);
+  border-right: 1px solid rgba(255,255,255,0.07);
   display: flex;
   flex-direction: column;
-  gap: 0.375rem;
+  gap: 1.25rem;
+  min-width: 0;
 }
 
-.receiptRow {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8125rem;
-  color: #3f4238;
+.catCol:last-child {
+  border-right: none;
 }
 
-.receiptSub {
+.catLabel {
+  font-family: var(--font-body);
   font-size: 0.6875rem;
-  color: #a5a58d;
-  padding-left: 0.5rem;
-}
-
-.receiptSubRows {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.receiptSubRow {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.6875rem;
-  color: #a5a58d;
-  letter-spacing: 0.03em;
-}
-
-.receiptTotal {
-  display: flex;
-  justify-content: space-between;
-  font-family: 'Fraunces', Georgia, serif;
-  font-size: 1.0625rem;
-  font-weight: 400;
-  color: #3f4238;
-}
-
-.receiptThanks {
-  text-align: center;
-  font-size: 0.6875rem;
-  color: #a5a58d;
-  line-height: 1.6;
-  letter-spacing: 0.04em;
-}
-
-.receiptStamp {
-  align-self: center;
-  width: 62px;
-  height: 62px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(107,112,92,0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 0.25rem;
-  transform: rotate(-8deg);
-  opacity: 0.55;
-}
-
-.receiptStampInner {
-  font-family: 'Instrument Sans', sans-serif;
-  font-size: 0.45rem;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #6b705c;
-  text-align: center;
-  line-height: 1.6;
+  color: var(--color-accent);
+}
+
+.catDivider {
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+}
+
+.catItems {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.125rem, 2.5vw, 1.625rem);
+}
+
+/* ── Menu item ── */
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.itemTop {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.itemName {
+  font-family: var(--font-display);
+  font-size: clamp(0.9375rem, 1.2vw, 1.125rem);
+  font-weight: 400;
+  color: #e5d7c4;
+  line-height: 1.25;
+  min-width: 0;
+}
+
+.itemDots {
+  flex: 1;
+  border-bottom: 1px dotted rgba(255,255,255,0.14);
+  margin-bottom: 4px;
+  min-width: 0.375rem;
+  flex-shrink: 1;
+}
+
+.itemPrice {
+  font-family: var(--font-display);
+  font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
+  font-style: italic;
+  color: rgba(229,215,196,0.85);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.itemBottom {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.itemDesc {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(229,215,196,0.52);
+  letter-spacing: 0.01em;
+  line-height: 1.55;
+}
+
+.itemTag {
+  font-family: var(--font-body);
+  font-size: 0.46rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  background: rgba(143,196,124,0.1);
+  border: 1px solid rgba(143,196,124,0.2);
+  padding: 0.1rem 0.4rem;
+  border-radius: 2px;
+}
+
+/* ── Addons panel ── */
+.addons {
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: clamp(1rem, 2vw, 1.875rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.addonsRow {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.75rem 0;
+}
+
+.addonsDivider {
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+}
+
+.addonsLabel {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(229,215,196,0.45);
+}
+
+.addonsPills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.addonPill {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(229,215,196,0.72);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 0.35rem 0.875rem;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.addonPrice {
+  color: rgba(229,215,196,0.45);
+  font-size: 0.6875rem;
 }
 
 /* ── CTA ── */
 .cta {
   align-self: flex-start;
-  font-family: 'Instrument Sans', sans-serif;
+  font-family: var(--font-body);
   font-size: var(--text-ui);
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-primary-dark);
+  color: #e5d7c4;
   text-decoration: none;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid rgba(229,215,196,0.25);
   padding-bottom: 2px;
   transition: color var(--t-fast), border-color var(--t-fast);
 }
 
 .cta:hover {
-  color: var(--color-primary);
-  border-color: var(--color-primary);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
 }
 
-@media (max-width: 768px) {
-  .cards { flex-direction: column; }
-  .menuCard, .receiptCard { transform: none; }
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .catGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .catCol:nth-child(2) {
+    border-right: none;
+  }
+
+  .catCol:nth-child(1),
+  .catCol:nth-child(2) {
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .addonsRow {
+    grid-template-columns: 5.5rem 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .catGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .catCol {
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .catCol:last-child {
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .addonsRow {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
 }

@@ -21,16 +21,8 @@ export default function Navbar() {
       <nav className={styles.nav} aria-label="Main navigation">
         <div className={styles.inner}>
 
-          <Link to="/" className={styles.logo} aria-label="Mewcha — home">
-            <svg width="22" height="20" viewBox="0 0 28 26" fill="none" aria-hidden="true" className={styles.logoIcon}>
-              <path d="M4,12 L1,2 L9,8 Z" fill="var(--color-accent)" opacity="0.9" />
-              <path d="M24,12 L27,2 L19,8 Z" fill="var(--color-accent)" opacity="0.9" />
-              <ellipse cx="14" cy="19" rx="7" ry="6" fill="var(--color-accent)" />
-              <circle cx="7"  cy="13" r="3"   fill="var(--color-accent)" />
-              <circle cx="21" cy="13" r="3"   fill="var(--color-accent)" />
-              <circle cx="10" cy="8"  r="2.2" fill="var(--color-accent)" />
-              <circle cx="18" cy="8"  r="2.2" fill="var(--color-accent)" />
-            </svg>
+          <Link to="/" className={styles.logo} aria-label="Mewcha, home">
+            <img src="/logo.png" alt="" aria-hidden="true" className={styles.logoIcon} />
             <span className={styles.logoText}>mewcha</span>
           </Link>
 
