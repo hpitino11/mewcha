@@ -123,16 +123,13 @@ interface SlotAnimate {
 }
 
 function slotAnimate(slot: number): SlotAnimate {
-  if (slot === 0)  return { x: '0vw',   y: '0vh',  scale: 1,    opacity: 1,    zIndex: 5 };
-  if (slot === 1)  return { x: '16vw',  y: '3vh',  scale: 0.60, opacity: 0.62, zIndex: 4 };
-  if (slot === 2)  return { x: '27vw',  y: '6vh',  scale: 0.37, opacity: 0.40, zIndex: 3 };
-  if (slot === 3)  return { x: '36vw',  y: '9vh',  scale: 0.24, opacity: 0.26, zIndex: 2 };
-  if (slot === 4)  return { x: '44vw',  y: '11vh', scale: 0.16, opacity: 0.15, zIndex: 1 };
-  if (slot === 5)  return { x: '51vw',  y: '13vh', scale: 0.10, opacity: 0.08, zIndex: 1 };
-  if (slot === -1) return { x: '-16vw', y: '3vh',  scale: 0.60, opacity: 0,    zIndex: 4 };
-  if (slot === -2) return { x: '-27vw', y: '6vh',  scale: 0.37, opacity: 0,    zIndex: 3 };
+  if (slot === 0)  return { x: '12vw',  y: '-8vh',  scale: 1.00, opacity: 1,    zIndex: 5 };
+  if (slot === 1)  return { x: '30vw',  y: '-3vh',  scale: 0.62, opacity: 0.60, zIndex: 4 };
+  if (slot === 2)  return { x: '42vw',  y: '0vh',   scale: 0.38, opacity: 0.36, zIndex: 3 };
+  if (slot === -1) return { x: '-12vw', y: '-3vh',  scale: 0.62, opacity: 0,    zIndex: 4 };
+  if (slot === -2) return { x: '-24vw', y: '0vh',   scale: 0.38, opacity: 0,    zIndex: 3 };
   const side = slot < 0 ? -1 : 1;
-  return { x: `${side * 58}vw`, y: '14vh', scale: 0.07, opacity: 0, zIndex: 1 };
+  return { x: `${side * 72}vw`, y: '0vh', scale: 0.10, opacity: 0, zIndex: 1 };
 }
 
 const CUP_SPRING = { type: 'spring', stiffness: 210, damping: 28, mass: 0.85 } as const;
@@ -173,23 +170,6 @@ export default function DrinkCarousel() {
       transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className={styles.noise} aria-hidden="true" />
-
-      {/* Flavour pills — top right */}
-      <nav className={styles.pills} aria-label="Choose a drink">
-        {DRINKS.map((d, i) => (
-          <button
-            key={i}
-            className={`${styles.pill} ${i === active ? styles.pillActive : ''}`}
-            onClick={() => goTo(i)}
-            aria-current={i === active ? 'true' : undefined}
-            style={i === active
-              ? { backgroundColor: drink.accent, color: drink.bg, borderColor: drink.accent }
-              : undefined}
-          >
-            {d.label}
-          </button>
-        ))}
-      </nav>
 
       {/* ════ Right: image carousel — absolutely fills the right half of hero ════ */}
       <div className={styles.cupsCol} aria-hidden="true">
