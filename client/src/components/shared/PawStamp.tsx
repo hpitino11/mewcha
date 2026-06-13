@@ -16,11 +16,11 @@ export default function PawStamp({ size = 24, color = 'var(--color-accent)', cla
       className={className}
       role="img"
     >
-      <ellipse cx="16" cy="21" rx="7.5" ry="6.5" />
-      <circle cx="8"  cy="14" r="3.5" />
-      <circle cx="24" cy="14" r="3.5" />
-      <circle cx="11" cy="8"  r="2.75" />
-      <circle cx="21" cy="8"  r="2.75" />
+      <ellipse cx="16" cy="23" rx="7" ry="6" />
+      <ellipse cx="7"    cy="16"   rx="2.6" ry="3.6" transform="rotate(-28 7 16)"/>
+      <ellipse cx="12.5" cy="9.5"  rx="2.6" ry="3.6" transform="rotate(-8 12.5 9.5)"/>
+      <ellipse cx="19.5" cy="9.5"  rx="2.6" ry="3.6" transform="rotate(8 19.5 9.5)"/>
+      <ellipse cx="25"   cy="16"   rx="2.6" ry="3.6" transform="rotate(28 25 16)"/>
     </svg>
   );
 }

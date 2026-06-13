@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, type TargetAndTransition, type Variants } from 'framer-motion';
 import styles from './DrinkCarousel.module.css';
 
 interface Drink {
@@ -122,7 +122,7 @@ interface SlotAnimate {
   zIndex: number;
 }
 
-function slotAnimate(slot: number): SlotAnimate {
+function slotAnimate(slot: number): TargetAndTransition {
   if (slot === 0)  return { x: '12vw',  y: '-8vh',  scale: 1.00, opacity: 1,    zIndex: 5 };
   if (slot === 1)  return { x: '30vw',  y: '-3vh',  scale: 0.62, opacity: 0.60, zIndex: 4 };
   if (slot === 2)  return { x: '42vw',  y: '0vh',   scale: 0.38, opacity: 0.36, zIndex: 3 };
@@ -198,20 +198,6 @@ export default function DrinkCarousel() {
             );
           })}
 
-          <AnimatePresence mode="wait">
-            {drink.stamp && (
-              <motion.div
-                key={`stamp-${active}`}
-                className={styles.drinkStamp}
-                initial={{ opacity: 0, rotate: -22, scale: 0.6 }}
-                animate={{ opacity: 1, rotate: -14, scale: 1 }}
-                exit={{ opacity: 0, rotate: -8, scale: 0.75 }}
-                transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <span>{drink.stamp}</span>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       </div>
 
@@ -247,7 +233,21 @@ export default function DrinkCarousel() {
                 {drink.tagline}
               </p>
 
-              <p className={styles.description}>{drink.description}</p>
+              <div className={styles.descRow}>
+                <p className={styles.description}>{drink.description}</p>
+                {drink.stamp && (
+                  <motion.div
+                    key={`stamp-${active}`}
+                    className={styles.drinkStamp}
+                    initial={{ opacity: 0, rotate: -22, scale: 0.6 }}
+                    animate={{ opacity: 1, rotate: -14, scale: 1 }}
+                    exit={{ opacity: 0, rotate: -8, scale: 0.75 }}
+                    transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <span>{drink.stamp}</span>
+                  </motion.div>
+                )}
+              </div>
 
               <div className={styles.actions}>
                 <span className={styles.price} style={{ color: drink.accent }}>

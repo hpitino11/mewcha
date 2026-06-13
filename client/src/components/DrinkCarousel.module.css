@@ -262,13 +262,19 @@
   image-rendering: auto;
 }
 
+.descRow {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(0.875rem, 2vw, 1.25rem);
+}
+
 .drinkStamp {
-  position: absolute;
-  bottom: 22%;
-  left: 68%;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: -2rem;
   z-index: 10;
-  width: clamp(64px, 6.5vw, 86px);
-  height: clamp(64px, 6.5vw, 86px);
+  width: clamp(60px, 6vw, 80px);
+  height: clamp(60px, 6vw, 80px);
   border-radius: 50%;
   border: 1.5px dashed rgba(255, 255, 255, 0.75);
   display: flex;

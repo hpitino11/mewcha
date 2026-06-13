@@ -8,8 +8,7 @@ import styles from './Landing.module.css';
 const MARQUEE_WORDS = ['matcha', 'milk tea', 'taro', 'brown sugar', 'strawberry', 'thai tea', 'honeydew', 'coffee'];
 
 export default function Landing() {
-  const marqueeRef = useReveal(0);
-  const storeRef   = useReveal(0);
+  const storeRef = useReveal(0);
 
   return (
     <main className={styles.page}>
@@ -22,9 +21,9 @@ export default function Landing() {
       {/* ═══════════════════════════════════════════
           MARQUEE
       ═══════════════════════════════════════════ */}
-      <div ref={marqueeRef as React.RefObject<HTMLDivElement>} className={`${styles.marqueeWrap} reveal-section`} aria-hidden="true">
+      <div className={styles.marqueeWrap} aria-hidden="true">
         <div className={styles.marqueeTrack}>
-          {[...MARQUEE_WORDS, ...MARQUEE_WORDS].map((word, i) => (
+          {[...MARQUEE_WORDS, ...MARQUEE_WORDS, ...MARQUEE_WORDS, ...MARQUEE_WORDS].map((word, i) => (
             <span key={i} className={styles.marqueeItem}>
               <span className={styles.marqueeDot} />
               {word}
