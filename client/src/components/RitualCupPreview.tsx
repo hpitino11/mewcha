@@ -387,28 +387,29 @@ export default function RitualCupPreview({
             </g>
           ))}
 
-          {/* Boba pearls — shadows first, then pearls, then highlights */}
-          {hasBoba && BOBA_PEARLS.map((b, i) => (
-            <ellipse key={`ps${i}`}
-              cx={b.cx + 0.5} cy={b.cy + b.r * 0.58}
-              rx={b.r * 0.88} ry={b.r * 0.27}
-              fill="rgba(0,0,0,0.22)"
-            />
-          ))}
-          {hasBoba && BOBA_PEARLS.map((b, i) => (
-            <circle key={i} cx={b.cx} cy={b.cy} r={b.r}
-              fill={`url(#${uid}pearl)`}
-              className={styles.topping}
-              style={{ animationDelay: `${i * 22}ms` }}
-            />
-          ))}
-          {hasBoba && BOBA_PEARLS.map((b, i) => (
-            <circle key={`ph${i}`}
-              cx={b.cx - b.r * 0.28} cy={b.cy - b.r * 0.30}
-              r={b.r * 0.30}
-              fill="rgba(255,255,255,0.15)"
-            />
-          ))}
+          {/* Boba pearls — shadow + pearl + highlight grouped so they animate together */}
+          {hasBoba && BOBA_PEARLS.map((b, i) => {
+            /* stagger: top row first (drops from above), bottom row last */
+            const row = i < 15 ? (i < 8 ? 2 : 1) : 0;
+            const delay = row * 55 + (i % 8) * 10;
+            return (
+              <g key={i} className={styles.topping} style={{ animationDelay: `${delay}ms` }}>
+                <ellipse
+                  cx={b.cx + 0.5} cy={b.cy + b.r * 0.58}
+                  rx={b.r * 0.88} ry={b.r * 0.27}
+                  fill="rgba(0,0,0,0.22)"
+                />
+                <circle cx={b.cx} cy={b.cy} r={b.r}
+                  fill={`url(#${uid}pearl)`}
+                />
+                <circle
+                  cx={b.cx - b.r * 0.28} cy={b.cy - b.r * 0.30}
+                  r={b.r * 0.30}
+                  fill="rgba(255,255,255,0.15)"
+                />
+              </g>
+            );
+          })}
 
         </g>
 
