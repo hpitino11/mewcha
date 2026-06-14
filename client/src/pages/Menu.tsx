@@ -43,6 +43,43 @@ function getTags(item: MenuItem) {
   return TAGS_MAP[item.name] ?? [];
 }
 
+const DESCRIPTORS = [
+  {
+    label: 'earthy',
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M8 2C8 2 3 5.5 3 10c0 2.8 2.2 4 5 4s5-1.2 5-4C13 5.5 8 2 8 2Z" fill="currentColor" opacity="0.85"/>
+        <path d="M8 14V9" stroke="#faf8f4" strokeWidth="1.2" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
+    label: 'creamy',
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M8 2L11.5 9C12.5 11 11.5 14 8 14C4.5 14 3.5 11 4.5 9L8 2Z" fill="currentColor" opacity="0.85"/>
+      </svg>
+    ),
+  },
+  {
+    label: 'bright',
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <circle cx="8" cy="8" r="2.8" fill="currentColor"/>
+        <path d="M8 1.5V3.5M8 12.5V14.5M1.5 8H3.5M12.5 8H14.5M3.6 3.6L5 5M11 11L12.4 12.4M3.6 12.4L5 11M11 5L12.4 3.6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
+    label: 'bold',
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M9.5 2L4 9H8.5L6.5 14L12 7H7.5L9.5 2Z" fill="currentColor" opacity="0.85"/>
+      </svg>
+    ),
+  },
+];
+
 export default function Menu() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [active, setActive] = useState(searchParams.get('category') || 'all');
@@ -76,11 +113,13 @@ export default function Menu() {
           <p className={styles.heroBody}>
             Thoughtful ingredients. Balanced flavors. Brewed for the way you like it.
           </p>
-          <div className={styles.heroPills}>
-            <span>earthy</span>
-            <span>creamy</span>
-            <span>bright</span>
-            <span>bold</span>
+          <div className={styles.heroDescriptors}>
+            {DESCRIPTORS.map(d => (
+              <span key={d.label} className={styles.heroDescItem}>
+                <span className={styles.heroDescIcon}>{d.icon}</span>
+                {d.label}
+              </span>
+            ))}
           </div>
         </div>
 
@@ -189,14 +228,12 @@ function MenuCard({ item }: { item: MenuItem }) {
 function SkeletonCard() {
   return (
     <div className={styles.card} style={{ pointerEvents: 'none' }}>
-      <div className={styles.cardImgWrap}>
-        <div className={styles.skel} style={{ width: '60%', height: '100%', borderRadius: 4 }} />
-      </div>
+      <div className={styles.cardImgWrap} />
       <div className={styles.cardBody}>
-        <div className={styles.skel} style={{ width: 56, height: 9, borderRadius: 2, marginBottom: 10 }} />
+        <div className={styles.skel} style={{ width: 52, height: 9, borderRadius: 2, marginBottom: 10 }} />
         <div className={styles.skel} style={{ width: '75%', height: 20, borderRadius: 3, marginBottom: 6 }} />
         <div className={styles.skel} style={{ width: '95%', height: 10, borderRadius: 3, marginBottom: 4 }} />
-        <div className={styles.skel} style={{ width: '70%', height: 10, borderRadius: 3 }} />
+        <div className={styles.skel} style={{ width: '65%', height: 10, borderRadius: 3 }} />
       </div>
     </div>
   );
