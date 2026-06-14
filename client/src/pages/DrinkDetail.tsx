@@ -45,7 +45,9 @@ export default function DrinkDetail() {
   if (isError || !item) {
     return (
       <div className={styles.state}>
-        <div className={styles.stateInner}>Drink not found. <Link to="/menu">Back to menu →</Link></div>
+        <div className={styles.stateInner}>
+          Drink not found. <Link to="/menu">Back to menu →</Link>
+        </div>
       </div>
     );
   }
@@ -82,13 +84,14 @@ export default function DrinkDetail() {
 
   return (
     <main className={styles.page}>
+      <div className={styles.inner}>
       <Link to="/menu" className={styles.back}>← back to menu</Link>
 
       <div className={styles.layout}>
         {/* ── Left: info + cup preview ── */}
         <div className={styles.left}>
           <div className={styles.drinkMeta}>
-            <EditorialKicker label={item.category_name} />
+            <EditorialKicker label={item.category_name} className={styles.kicker} />
             <div className={styles.drinkBadges}>
               {item.is_bestseller && (
                 <span className={styles.badge}>
@@ -192,6 +195,7 @@ export default function DrinkDetail() {
             </button>
           </div>
         </div>
+      </div>
       </div>
     </main>
   );
