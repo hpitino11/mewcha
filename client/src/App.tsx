@@ -8,7 +8,6 @@ import Footer from './components/Footer';
 import RitualLoader from './components/RitualLoader';
 import Landing from './pages/Landing';
 import Menu from './pages/Menu';
-import DrinkDetail from './pages/DrinkDetail';
 import Cart from './pages/Cart';
 import Orders from './pages/Orders';
 import Login from './pages/Login';
@@ -40,14 +39,13 @@ export default function App() {
           <BrowserRouter>
             <Navbar />
             <Routes>
-              <Route path="/"         element={<Landing />} />
-              <Route path="/menu"     element={<Menu />} />
-              <Route path="/menu/:id" element={<DrinkDetail />} />
-              <Route path="/cart"     element={<Cart />} />
-              <Route path="/orders"   element={<Orders />} />
-              <Route path="/login"    element={<Login />} />
-              <Route path="/signup"   element={<Signup />} />
-              <Route path="/admin"    element={<Admin />} />
+              <Route path="/"       element={<Landing />} />
+              <Route path="/menu"   element={<Menu />} />
+              <Route path="/cart"   element={<Cart />} />
+              <Route path="/orders" element={<Orders />} />
+              <Route path="/login"  element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/admin"  element={<Admin />} />
             </Routes>
             <Footer />
           </BrowserRouter>

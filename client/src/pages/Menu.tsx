@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../lib/api';
 import type { MenuItem } from '../types';
 import EditorialKicker from '../components/shared/EditorialKicker';
+import DrinkModal from '../components/DrinkModal';
 import styles from './Menu.module.css';
 
 const TABS = [
@@ -83,6 +84,7 @@ const DESCRIPTORS = [
 export default function Menu() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [active, setActive] = useState(searchParams.get('category') || 'all');
+  const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
 
   const { data: items, isLoading } = useQuery({
     queryKey: ['menu', active],
@@ -103,103 +105,113 @@ export default function Menu() {
   const regular  = items?.filter(i => i !== featured) ?? [];
 
   return (
-    <main className={styles.page}>
-      <div className={styles.inner}>
+    <>
+      <main className={styles.page}>
+        <div className={styles.inner}>
 
-        {/* ── Hero ── */}
-        <section className={styles.hero}>
-          <div className={styles.heroLeft}>
-            <EditorialKicker label="the menu" className={styles.kicker} />
-            <h1 className={styles.heroTitle}>Every cup,<br />yours.</h1>
-            <p className={styles.heroBody}>
-              Thoughtful ingredients. Balanced flavors. Brewed for the way you like it.
-            </p>
-            <div className={styles.heroDescriptors}>
-              {DESCRIPTORS.map(d => (
-                <span key={d.label} className={styles.heroDescItem}>
-                  <span className={styles.heroDescIcon}>{d.icon}</span>
-                  {d.label}
-                </span>
+          {/* ── Hero ── */}
+          <section className={styles.hero}>
+            <div className={styles.heroLeft}>
+              <EditorialKicker label="the menu" className={styles.kicker} />
+              <h1 className={styles.heroTitle}>Every cup,<br />yours.</h1>
+              <p className={styles.heroBody}>
+                Thoughtful ingredients. Balanced flavors. Brewed for the way you like it.
+              </p>
+              <div className={styles.heroDescriptors}>
+                {DESCRIPTORS.map(d => (
+                  <span key={d.label} className={styles.heroDescItem}>
+                    <span className={styles.heroDescIcon}>{d.icon}</span>
+                    {d.label}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {featured && active === 'all' ? (
+              <button
+                type="button"
+                className={styles.heroSpotlight}
+                onClick={() => setSelectedItemId(featured.id)}
+              >
+                <div className={styles.spotlightContent}>
+                  <div className={styles.spotlightMeta}>
+                    <EditorialKicker
+                      label={featured.is_seasonal ? 'seasonal pick' : 'neko pick'}
+                      className={styles.spotlightKicker}
+                    />
+                    <span className={styles.spotlightBadge}>
+                      {featured.is_seasonal ? 'Seasonal' : 'Neko Pick'}
+                    </span>
+                  </div>
+                  <h2 className={styles.spotlightName}>{featured.name}</h2>
+                  <p className={styles.spotlightDesc}>{featured.description}</p>
+                  <div className={styles.spotlightFooter}>
+                    <span className={styles.spotlightPrice}>
+                      from ${parseFloat(featured.base_price).toFixed(2)}
+                    </span>
+                    <span className={styles.spotlightCta}>Order now</span>
+                  </div>
+                </div>
+                <div className={styles.spotlightImgWrap}>
+                  <img src={getImage(featured)} alt={featured.name} className={styles.spotlightImg} />
+                </div>
+              </button>
+            ) : (
+              <div className={styles.heroSpotlightEmpty} />
+            )}
+          </section>
+
+          {/* ── Category tabs ── */}
+          <div className={styles.tabsWrap}>
+            <div className={styles.tabs} role="tablist" aria-label="Menu categories">
+              {TABS.map(tab => (
+                <button
+                  key={tab.slug}
+                  role="tab"
+                  aria-selected={active === tab.slug}
+                  className={`${styles.tab} ${active === tab.slug ? styles.tabActive : ''}`}
+                  onClick={() => handleTab(tab.slug)}
+                >
+                  {tab.label}
+                </button>
               ))}
             </div>
           </div>
 
-          {featured && active === 'all' ? (
-            <Link to={`/menu/${featured.id}`} className={styles.heroSpotlight}>
-              <div className={styles.spotlightContent}>
-                <div className={styles.spotlightMeta}>
-                  <EditorialKicker
-                    label={featured.is_seasonal ? 'seasonal pick' : 'neko pick'}
-                    className={styles.spotlightKicker}
-                  />
-                  <span className={styles.spotlightBadge}>
-                    {featured.is_seasonal ? 'Seasonal' : 'Neko Pick'}
-                  </span>
-                </div>
-                <h2 className={styles.spotlightName}>{featured.name}</h2>
-                <p className={styles.spotlightDesc}>{featured.description}</p>
-                <div className={styles.spotlightFooter}>
-                  <span className={styles.spotlightPrice}>
-                    from ${parseFloat(featured.base_price).toFixed(2)}
-                  </span>
-                  <span className={styles.spotlightCta}>Order now</span>
-                </div>
-              </div>
-              <div className={styles.spotlightImgWrap}>
-                <img src={getImage(featured)} alt={featured.name} className={styles.spotlightImg} />
-              </div>
-            </Link>
-          ) : (
-            <div className={styles.heroSpotlightEmpty} />
-          )}
-        </section>
-
-        {/* ── Category tabs ── */}
-        <div className={styles.tabsWrap}>
-          <div className={styles.tabs} role="tablist" aria-label="Menu categories">
-            {TABS.map(tab => (
-              <button
-                key={tab.slug}
-                role="tab"
-                aria-selected={active === tab.slug}
-                className={`${styles.tab} ${active === tab.slug ? styles.tabActive : ''}`}
-                onClick={() => handleTab(tab.slug)}
-              >
-                {tab.label}
+          {/* ── Grid ── */}
+          {isLoading ? (
+            <div className={styles.grid}>
+              {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
+            </div>
+          ) : items?.length === 0 ? (
+            <div className={styles.empty}>
+              <p>No drinks in this category yet.</p>
+              <button className={styles.emptyLink} onClick={() => handleTab('all')}>
+                See all drinks
               </button>
-            ))}
-          </div>
+            </div>
+          ) : (
+            <div className={styles.grid}>
+              {(featured && active === 'all' ? regular : items ?? []).map(item => (
+                <MenuCard key={item.id} item={item} onClick={() => setSelectedItemId(item.id)} />
+              ))}
+            </div>
+          )}
+
         </div>
+      </main>
 
-        {/* ── Grid ── */}
-        {isLoading ? (
-          <div className={styles.grid}>
-            {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
-          </div>
-        ) : items?.length === 0 ? (
-          <div className={styles.empty}>
-            <p>No drinks in this category yet.</p>
-            <button className={styles.emptyLink} onClick={() => handleTab('all')}>
-              See all drinks
-            </button>
-          </div>
-        ) : (
-          <div className={styles.grid}>
-            {(featured && active === 'all' ? regular : items ?? []).map(item => (
-              <MenuCard key={item.id} item={item} />
-            ))}
-          </div>
-        )}
-
-      </div>
-    </main>
+      {selectedItemId !== null && (
+        <DrinkModal itemId={selectedItemId} onClose={() => setSelectedItemId(null)} />
+      )}
+    </>
   );
 }
 
-function MenuCard({ item }: { item: MenuItem }) {
+function MenuCard({ item, onClick }: { item: MenuItem; onClick: () => void }) {
   const tags = getTags(item);
   return (
-    <Link to={`/menu/${item.id}`} className={styles.card}>
+    <button type="button" className={styles.card} onClick={onClick}>
       <div className={styles.cardImgWrap}>
         {item.is_seasonal && <span className={styles.cardBadgeSeasonal}>Seasonal</span>}
         <img
@@ -230,7 +242,7 @@ function MenuCard({ item }: { item: MenuItem }) {
           <span className={styles.cardCta}>Add to Order +</span>
         </div>
       </div>
-    </Link>
+    </button>
   );
 }
 
