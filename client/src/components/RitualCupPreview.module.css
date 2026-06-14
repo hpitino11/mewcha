@@ -8,67 +8,77 @@
 }
 
 .svg {
-  width: 200px;
-  height: 300px;
+  width: 100%;
+  max-width: 210px;
+  height: auto;
   overflow: visible;
-  transition: transform var(--t-spring);
+  transition: transform 0.55s cubic-bezier(0.34, 1.2, 0.64, 1);
+  transform-origin: center bottom;
 }
 
-/* Liquid transitions */
+/* Liquid fill — y animates for size changes */
 .liquid {
-  transition: y var(--t-spring), fill var(--t-slow);
+  transition: y 0.52s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Sweetness overlay fade */
 .sweetnessLayer {
-  transition: opacity var(--t-slow);
+  transition: opacity 0.55s ease;
 }
 
+/* Straw color change */
 .straw {
-  transition: fill var(--t-slow);
+  transition: fill 0.4s ease;
 }
 
+/* Topping drop-in with spring bounce */
 .topping {
-  animation: topping-in 400ms var(--ease-out) both;
+  animation: topping-drop 0.48s cubic-bezier(0.34, 1.4, 0.64, 1) both;
 }
 
-@keyframes topping-in {
-  from { opacity: 0; transform: scale(0.5) translateY(8px); }
-  to   { opacity: 1; transform: scale(1) translateY(0); }
+@keyframes topping-drop {
+  0%   { opacity: 0; transform: translateY(-20px) scale(0.6); }
+  55%  { opacity: 1; transform: translateY(5px)   scale(1.07); }
+  75%  { transform: translateY(-2px) scale(0.97); }
+  100% { opacity: 1; transform: translateY(0)     scale(1); }
 }
 
+/* Ice slide-in */
 .iceCube {
-  animation: ice-in 350ms var(--ease-out) both;
+  animation: ice-slide 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
-@keyframes ice-in {
-  from { opacity: 0; transform: scale(0.7); }
-  to   { opacity: 1; transform: scale(1); }
+@keyframes ice-slide {
+  0%   { opacity: 0; transform: translateY(-14px) scale(0.72); }
+  65%  { opacity: 1; transform: translateY(3px)   scale(1.03); }
+  100% { opacity: 1; transform: translateY(0)     scale(1); }
 }
 
-/* Steam animation */
-.steam {
-  opacity: 0.55;
-}
+/* Steam */
+.steam { opacity: 0.5; }
 
 .steamLine {
   fill: none;
   stroke: var(--color-accent-sand);
   stroke-width: 2.5;
   stroke-linecap: round;
-  animation: steam-rise 2.4s ease-in-out infinite;
+  animation: steam-rise 2.6s ease-in-out infinite;
   transform-origin: center bottom;
 }
 
 @keyframes steam-rise {
-  0%   { opacity: 0;   transform: translateY(0)    scaleX(1); }
-  30%  { opacity: 0.6; transform: translateY(-6px)  scaleX(1.1); }
-  70%  { opacity: 0.3; transform: translateY(-16px) scaleX(0.9); }
-  100% { opacity: 0;   transform: translateY(-26px) scaleX(0.8); }
+  0%   { opacity: 0;   transform: translateY(0)    scaleX(1);   }
+  30%  { opacity: 0.6; transform: translateY(-7px)  scaleX(1.1); }
+  70%  { opacity: 0.3; transform: translateY(-18px) scaleX(0.9); }
+  100% { opacity: 0;   transform: translateY(-30px) scaleX(0.8); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .svg { transition: none; }
-  .liquid, .sweetnessLayer, .straw { transition: none; }
-  .topping, .iceCube { animation: none; }
-  .steamLine { animation: none; }
+  .svg              { transition: none; }
+  .liquid           { transition: none; }
+  .sweetnessLayer   { transition: none; }
+  .straw            { transition: none; }
+  .topping          { animation: none; }
+  .iceCube          { animation: none; }
+  .steamLine        { animation: none; }
 }
