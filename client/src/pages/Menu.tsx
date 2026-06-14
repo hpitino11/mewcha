@@ -49,7 +49,7 @@ const DESCRIPTORS = [
     icon: (
       <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
         <path d="M8 2C8 2 3 5.5 3 10c0 2.8 2.2 4 5 4s5-1.2 5-4C13 5.5 8 2 8 2Z" fill="currentColor" opacity="0.85"/>
-        <path d="M8 14V9" stroke="#faf8f4" strokeWidth="1.2" strokeLinecap="round"/>
+        <path d="M8 14V9" stroke="#3f4238" strokeWidth="1.2" strokeLinecap="round"/>
       </svg>
     ),
   },
@@ -104,91 +104,94 @@ export default function Menu() {
 
   return (
     <main className={styles.page}>
+      <div className={styles.inner}>
 
-      {/* ── Hero ── */}
-      <section className={styles.hero}>
-        <div className={styles.heroLeft}>
-          <EditorialKicker label="the menu" />
-          <h1 className={styles.heroTitle}>Every cup,<br /><em>yours.</em></h1>
-          <p className={styles.heroBody}>
-            Thoughtful ingredients. Balanced flavors. Brewed for the way you like it.
-          </p>
-          <div className={styles.heroDescriptors}>
-            {DESCRIPTORS.map(d => (
-              <span key={d.label} className={styles.heroDescItem}>
-                <span className={styles.heroDescIcon}>{d.icon}</span>
-                {d.label}
-              </span>
+        {/* ── Hero ── */}
+        <section className={styles.hero}>
+          <div className={styles.heroLeft}>
+            <EditorialKicker label="the menu" className={styles.kicker} />
+            <h1 className={styles.heroTitle}>Every cup,<br /><em>yours.</em></h1>
+            <p className={styles.heroBody}>
+              Thoughtful ingredients. Balanced flavors. Brewed for the way you like it.
+            </p>
+            <div className={styles.heroDescriptors}>
+              {DESCRIPTORS.map(d => (
+                <span key={d.label} className={styles.heroDescItem}>
+                  <span className={styles.heroDescIcon}>{d.icon}</span>
+                  {d.label}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {featured && active === 'all' ? (
+            <Link to={`/menu/${featured.id}`} className={styles.heroSpotlight}>
+              <div className={styles.spotlightContent}>
+                <div className={styles.spotlightMeta}>
+                  <EditorialKicker
+                    label={featured.is_seasonal ? 'seasonal pick' : 'neko pick'}
+                    className={styles.spotlightKicker}
+                  />
+                  <span className={styles.spotlightBadge}>
+                    {featured.is_seasonal ? 'Seasonal' : 'Bestseller'}
+                  </span>
+                </div>
+                <h2 className={styles.spotlightName}>{featured.name}</h2>
+                <p className={styles.spotlightDesc}>{featured.description}</p>
+                <div className={styles.spotlightFooter}>
+                  <span className={styles.spotlightPrice}>
+                    from ${parseFloat(featured.base_price).toFixed(2)}
+                  </span>
+                  <span className={styles.spotlightCta}>Order now</span>
+                </div>
+              </div>
+              <div className={styles.spotlightImgWrap}>
+                <img src={getImage(featured)} alt={featured.name} className={styles.spotlightImg} />
+              </div>
+            </Link>
+          ) : (
+            <div className={styles.heroSpotlightEmpty} />
+          )}
+        </section>
+
+        {/* ── Category tabs ── */}
+        <div className={styles.tabsWrap}>
+          <div className={styles.tabs} role="tablist" aria-label="Menu categories">
+            {TABS.map(tab => (
+              <button
+                key={tab.slug}
+                role="tab"
+                aria-selected={active === tab.slug}
+                className={`${styles.tab} ${active === tab.slug ? styles.tabActive : ''}`}
+                onClick={() => handleTab(tab.slug)}
+              >
+                {tab.label}
+              </button>
             ))}
           </div>
         </div>
 
-        {featured && active === 'all' ? (
-          <Link to={`/menu/${featured.id}`} className={styles.heroSpotlight}>
-            <div className={styles.spotlightContent}>
-              <div className={styles.spotlightMeta}>
-                <EditorialKicker
-                  label={featured.is_seasonal ? 'seasonal pick' : 'neko pick'}
-                  className={styles.spotlightKicker}
-                />
-                <span className={styles.spotlightBadge}>
-                  {featured.is_seasonal ? 'Seasonal' : 'Bestseller'}
-                </span>
-              </div>
-              <h2 className={styles.spotlightName}>{featured.name}</h2>
-              <p className={styles.spotlightDesc}>{featured.description}</p>
-              <div className={styles.spotlightFooter}>
-                <span className={styles.spotlightPrice}>
-                  from ${parseFloat(featured.base_price).toFixed(2)}
-                </span>
-                <span className={styles.spotlightCta}>Order now</span>
-              </div>
-            </div>
-            <div className={styles.spotlightImgWrap}>
-              <img src={getImage(featured)} alt={featured.name} className={styles.spotlightImg} />
-            </div>
-          </Link>
-        ) : (
-          <div className={styles.heroSpotlightEmpty} />
-        )}
-      </section>
-
-      {/* ── Category tabs ── */}
-      <div className={styles.tabsWrap}>
-        <div className={styles.tabs} role="tablist" aria-label="Menu categories">
-          {TABS.map(tab => (
-            <button
-              key={tab.slug}
-              role="tab"
-              aria-selected={active === tab.slug}
-              className={`${styles.tab} ${active === tab.slug ? styles.tabActive : ''}`}
-              onClick={() => handleTab(tab.slug)}
-            >
-              {tab.label}
+        {/* ── Grid ── */}
+        {isLoading ? (
+          <div className={styles.grid}>
+            {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
+          </div>
+        ) : items?.length === 0 ? (
+          <div className={styles.empty}>
+            <p>No drinks in this category yet.</p>
+            <button className={styles.emptyLink} onClick={() => handleTab('all')}>
+              See all drinks
             </button>
-          ))}
-        </div>
-      </div>
+          </div>
+        ) : (
+          <div className={styles.grid}>
+            {(featured && active === 'all' ? regular : items ?? []).map(item => (
+              <MenuCard key={item.id} item={item} />
+            ))}
+          </div>
+        )}
 
-      {/* ── Grid ── */}
-      {isLoading ? (
-        <div className={styles.grid}>
-          {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
-        </div>
-      ) : items?.length === 0 ? (
-        <div className={styles.empty}>
-          <p>No drinks in this category yet.</p>
-          <button className={styles.emptyLink} onClick={() => handleTab('all')}>
-            See all drinks
-          </button>
-        </div>
-      ) : (
-        <div className={styles.grid}>
-          {(featured && active === 'all' ? regular : items ?? []).map(item => (
-            <MenuCard key={item.id} item={item} />
-          ))}
-        </div>
-      )}
+      </div>
     </main>
   );
 }

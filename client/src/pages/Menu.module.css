@@ -1,11 +1,14 @@
-/* Page bg is lighter than the cards */
+/* Full-bleed dark green page */
 .page {
   flex: 1;
+  width: 100%;
+  background: var(--color-primary-dark);
+}
+
+.inner {
   max-width: var(--max-width);
   margin: 0 auto;
-  width: 100%;
   padding: 3.5rem 2rem 7rem;
-  background: #f7f3ec;
 }
 
 /* ── Hero ── */
@@ -23,10 +26,15 @@
   gap: 0.875rem;
 }
 
+/* Kicker override — light on dark bg */
+.kicker span {
+  color: var(--color-primary-mid) !important;
+}
+
 .heroTitle {
   font-size: var(--text-display-sm);
   font-weight: 600;
-  color: var(--color-primary-dark);
+  color: var(--color-accent-cream);
   letter-spacing: -0.02em;
   line-height: 1.05;
   margin-top: 0.25rem;
@@ -34,18 +42,18 @@
 
 .heroTitle em {
   font-style: italic;
-  color: var(--color-primary);
+  color: var(--color-accent-sand);
 }
 
 .heroBody {
   font-size: var(--text-body);
   font-weight: 500;
-  color: var(--color-text-muted);
+  color: var(--color-primary-mid);
   line-height: 1.7;
   max-width: 36ch;
 }
 
-/* Descriptor list — icon + label, no pills */
+/* Descriptor list */
 .heroDescriptors {
   display: flex;
   flex-wrap: wrap;
@@ -62,21 +70,21 @@
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: lowercase;
-  color: var(--color-primary-dark);
+  color: var(--color-accent-cream);
 }
 
 .heroDescIcon {
   display: flex;
   align-items: center;
-  color: var(--color-primary-dark);
+  color: var(--color-accent-sand);
   flex-shrink: 0;
 }
 
-/* ── Spotlight ── */
+/* ── Spotlight — cream card on dark page ── */
 .heroSpotlight {
   display: flex;
   align-items: stretch;
-  background: var(--color-primary-dark);
+  background: #ede7d8;
   border-radius: var(--radius-xl);
   overflow: hidden;
   text-decoration: none;
@@ -85,14 +93,14 @@
 }
 
 .heroSpotlight:hover {
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.35);
   transform: translateY(-3px);
 }
 
 .heroSpotlightEmpty {
-  background: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.06);
   border-radius: var(--radius-xl);
-  border: 1px dashed var(--color-border-light);
+  border: 1px dashed rgba(255,255,255,0.15);
   min-height: 260px;
 }
 
@@ -118,8 +126,8 @@
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--color-primary-dark);
-  background: var(--color-accent-sand);
+  color: #faf8f4;
+  background: var(--color-primary-dark);
   padding: 0.25rem 0.65rem;
   border-radius: var(--radius-pill);
 }
@@ -128,7 +136,7 @@
   font-family: var(--font-display);
   font-size: clamp(1.625rem, 3vw, 2.5rem);
   font-weight: 500;
-  color: var(--color-accent-cream);
+  color: var(--color-primary-dark);
   letter-spacing: -0.01em;
   line-height: 1.1;
 }
@@ -136,7 +144,7 @@
 .spotlightDesc {
   font-size: 0.875rem;
   font-weight: 400;
-  color: var(--color-primary-mid);
+  color: var(--color-text-muted);
   line-height: 1.7;
   max-width: 38ch;
 }
@@ -151,7 +159,7 @@
 .spotlightPrice {
   font-family: var(--font-display);
   font-size: 1.25rem;
-  color: var(--color-accent-cream);
+  color: var(--color-primary-dark);
 }
 
 .spotlightCta {
@@ -159,14 +167,14 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-primary-dark);
-  background: var(--color-accent-cream);
+  color: #faf8f4;
+  background: var(--color-primary-dark);
   border-radius: var(--radius-pill);
   padding: 0.45rem 1.1rem;
   transition: background var(--t-fast);
 }
 
-.heroSpotlight:hover .spotlightCta { background: var(--color-accent-sand); }
+.heroSpotlight:hover .spotlightCta { background: var(--color-primary); }
 
 .spotlightImgWrap {
   width: 220px;
@@ -176,6 +184,7 @@
   justify-content: center;
   padding: 1.25rem 1.5rem 0;
   overflow: hidden;
+  background: #e5dece;
 }
 
 .spotlightImg {
@@ -183,12 +192,12 @@
   max-height: 260px;
   object-fit: contain;
   object-position: bottom;
-  filter: drop-shadow(0 12px 24px rgba(0,0,0,0.3));
+  filter: drop-shadow(0 10px 20px rgba(63,66,56,0.2));
 }
 
-/* ── Category tabs ── */
+/* ── Category tabs — light on dark ── */
 .tabsWrap {
-  border-bottom: 1px solid var(--color-border-light);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
   margin-bottom: 3rem;
   overflow-x: auto;
 }
@@ -206,7 +215,7 @@
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-text-subtle);
+  color: var(--color-primary-mid);
   padding: 0.875rem 1.5rem;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
@@ -219,25 +228,25 @@
   white-space: nowrap;
 }
 
-.tab:hover { color: var(--color-text); }
+.tab:hover { color: var(--color-accent-cream); }
 
 .tabActive {
-  color: var(--color-primary-dark);
-  border-bottom-color: var(--color-primary);
+  color: var(--color-accent-cream);
+  border-bottom-color: var(--color-accent-sand);
   font-weight: 600;
 }
 
-/* ── Card grid — 2 columns, horizontal cards ── */
+/* ── Card grid ── */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
   gap: 1rem;
 }
 
-/* Card — horizontal layout */
+/* Card — cream on dark page, horizontal layout */
 .card {
   background: #ede7d8;
-  border: 1px solid #ddd4c0;
+  border: 1px solid #d9d0bf;
   border-radius: var(--radius-xl);
   overflow: hidden;
   display: flex;
@@ -250,7 +259,7 @@
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.3);
   border-color: var(--color-accent-pale);
 }
 
@@ -264,7 +273,7 @@
   justify-content: center;
   overflow: hidden;
   padding: 0 0.5rem;
-  background: #e5dece;
+  background: #e0d9c8;
 }
 
 .cardImg {
@@ -274,7 +283,7 @@
   object-fit: contain;
   object-position: bottom center;
   transition: transform var(--t-spring);
-  filter: drop-shadow(0 4px 12px rgba(63,66,56,0.15));
+  filter: drop-shadow(0 4px 12px rgba(63,66,56,0.18));
 }
 
 .card:hover .cardImg {
@@ -296,8 +305,8 @@
 }
 
 .cardBadge {
-  background: var(--color-accent-sand);
-  color: var(--color-primary-dark);
+  background: var(--color-primary-dark);
+  color: var(--color-accent-cream);
 }
 
 .cardBadgeSeasonal {
@@ -311,7 +320,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  padding: 1.125rem 1.25rem 1.125rem;
+  padding: 1.125rem 1.25rem;
   min-width: 0;
 }
 
@@ -374,7 +383,7 @@
   justify-content: space-between;
   margin-top: auto;
   padding-top: 0.625rem;
-  border-top: 1px solid #ddd4c0;
+  border-top: 1px solid #d9d0bf;
 }
 
 .cardPrice {
@@ -389,7 +398,7 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #f7f3ec;
+  color: var(--color-accent-cream);
   background: var(--color-primary-dark);
   border-radius: var(--radius-pill);
   padding: 0.38rem 0.85rem;
@@ -409,14 +418,14 @@
   gap: 1rem;
 }
 
-.empty p { color: var(--color-text-muted); font-size: var(--text-body); }
+.empty p { color: var(--color-primary-mid); font-size: var(--text-body); }
 
 .emptyLink {
   font-size: var(--text-ui);
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-primary);
+  color: var(--color-accent-sand);
   cursor: pointer;
   background: none;
   border: none;
@@ -426,13 +435,13 @@
 
 /* ── Skeleton ── */
 .skel {
-  background: #d9d0bf;
+  background: rgba(255,255,255,0.15);
   animation: pulse 1.6s ease-in-out infinite;
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 0.4; }
-  50%       { opacity: 0.8; }
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 0.7; }
 }
 
 @media (max-width: 900px) {
@@ -443,7 +452,7 @@
 }
 
 @media (max-width: 640px) {
-  .page { padding: 2.5rem 1.25rem 5rem; }
+  .inner { padding: 2.5rem 1.25rem 5rem; }
   .card { height: 160px; }
   .cardImgWrap { width: 120px; }
 }
