@@ -89,10 +89,14 @@ const PUDDING = [
   { x: 148, y: 262, w: 23, h: 18 },
 ];
 
-/* How many px each topping layer shifts upward to stack above the one below */
-const LAYER_H = 20;
+/*
+ * Layer heights in CSS pixels (SVG displayed at max-width 210px over viewBox 200):
+ * 1 SVG unit ≈ 1.05 CSS px. Boba spans ~35 SVG units (3 rows) = ~37 CSS px;
+ * add a small gap so the next layer clears it cleanly.
+ */
+const BOBA_H  = 46; /* clears 3-row boba cluster + gap */
+const LAYER_H = 19; /* height of individual thin topping layers */
 
-/* CSS transition shared by all layer wrapper <g> elements */
 const LAYER_TRANSITION = 'transform 0.42s cubic-bezier(0.4, 0, 0.2, 1)';
 
 export default function RitualCupPreview({
@@ -111,20 +115,20 @@ export default function RitualCupPreview({
   const hasPudding = toppings.some(t => t.label.toLowerCase().includes('pudding'));
   const showSteam  = isCoffee || categorySlug === 'coffee';
 
-  /* ── Stacking offsets — each active layer pushes the ones above it up ── */
-  let stack = 0;
-  if (hasBoba)    stack++;   // boba is layer 0, counts as 1 occupied level
+  /* ── Stacking offsets — accumulate actual layer heights so each topping clears the ones below ── */
+  let totalY = 0;
+  if (hasBoba)    totalY += BOBA_H;   // boba cluster is tall (3 rows)
 
-  const puddingY  = -(stack * LAYER_H);
-  if (hasPudding) stack++;
+  const puddingY  = -totalY;
+  if (hasPudding) totalY += LAYER_H;
 
-  const redBeanY  = -(stack * LAYER_H);
-  if (hasRedBean) stack++;
+  const redBeanY  = -totalY;
+  if (hasRedBean) totalY += LAYER_H;
 
-  const lycheeY   = -(stack * LAYER_H);
-  if (hasLychee)  stack++;
+  const lycheeY   = -totalY;
+  if (hasLychee)  totalY += LAYER_H;
 
-  const aloeY     = -(stack * LAYER_H);
+  const aloeY     = -totalY;
 
   const CX = 100;
 
