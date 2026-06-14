@@ -91,10 +91,10 @@
   max-width: 44ch;
 }
 
-/* Cup preview — slightly lighter warm dark */
+/* Cup preview — cream background */
 .cupWrap {
-  background: #3a2d1e;
-  border: 1px solid rgba(255,255,255,0.07);
+  background: #ede7d8;
+  border: 1px solid #d9d0bf;
   border-radius: var(--radius-md);
   height: 360px;
   display: flex;
@@ -102,16 +102,6 @@
   justify-content: center;
   padding: 1.5rem 2rem 2rem;
   overflow: hidden;
-  position: relative;
-}
-
-/* Subtle radial glow behind the cup */
-.cupWrap::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 60% 50% at 50% 70%, rgba(203,153,126,0.08) 0%, transparent 65%);
-  pointer-events: none;
 }
 
 .ritualSummary {
