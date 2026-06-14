@@ -8,9 +8,8 @@ const CATEGORIES = [
     slug: 'matcha',
     label: 'Matcha',
     items: [
-      { name: 'Matcha Latte',      desc: 'Stone-ground matcha, oat milk, vanilla', price: '$6.50', tags: ['neko pick'] },
-      { name: 'Matcha Boba Latte', desc: 'Ceremonial matcha, oat milk, tapioca',   price: '$7.25' },
-      { name: 'Ceremonial Matcha', desc: 'Single-ingredient, whisked with water',  price: '$6.00' },
+      { name: 'Ceremonial Matcha', desc: 'Single-ingredient, whisked with water',  price: '$6.00', tags: ['neko pick'] },
+      { name: 'Matcha Latte',      desc: 'Stone-ground matcha, oat milk, vanilla', price: '$6.50' },
     ],
   },
   {

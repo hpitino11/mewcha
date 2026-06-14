@@ -13,7 +13,6 @@ const IMAGE_MAP: Record<string, string> = {
   'Brown Sugar Milk Tea': '/boba/brown_sugar.png',
   'Classic Milk Tea':     '/boba/milk_tea.png',
   'Taro Milk Tea':        '/boba/taro.png',
-  'Matcha Boba Latte':    '/boba/matcha.png',
   'Honeydew Milk Tea':    '/boba/honeydew.png',
   'Thai Milk Tea':        '/boba/thai_tea.png',
   'Iced Americano':       '/boba/coffee.png',

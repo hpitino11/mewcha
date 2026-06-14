@@ -22,7 +22,7 @@ exports.seed = async (knex) => {
       base_price: 6.50,
       is_available: true,
       is_seasonal: false,
-      is_bestseller: true,
+      is_bestseller: false,
     },
     {
       id: 2,
@@ -50,16 +50,6 @@ exports.seed = async (knex) => {
       name: 'Taro Milk Tea',
       description: 'Creamy taro root blended with whole milk and fragrant black tea. Earthy, sweet, and deeply satisfying.',
       base_price: 6.75,
-      is_available: true,
-      is_seasonal: false,
-      is_bestseller: false,
-    },
-    {
-      id: 5,
-      category_id: 1,
-      name: 'Matcha Boba Latte',
-      description: 'Ceremonial matcha poured over oat milk with chewy tapioca pearls. Earthy, creamy, and deeply satisfying.',
-      base_price: 7.25,
       is_available: true,
       is_seasonal: false,
       is_bestseller: false,
@@ -132,7 +122,7 @@ exports.seed = async (knex) => {
       base_price: 6.00,
       is_available: true,
       is_seasonal: false,
-      is_bestseller: false,
+      is_bestseller: true,
     },
   ]);
 
@@ -163,7 +153,7 @@ exports.seed = async (knex) => {
     { group_id: 4, label: 'Pudding',         price_modifier: 0.75 },
   ]);
 
-  const allItemIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const allItemIds = [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12];
   const rows = [];
   for (const item_id of allItemIds) {
     for (const option_group_id of [1, 2, 3, 4]) {

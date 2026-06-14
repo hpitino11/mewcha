@@ -19,7 +19,6 @@ const IMAGE_MAP: Record<string, string> = {
   'Brown Sugar Milk Tea': '/boba/brown_sugar.png',
   'Classic Milk Tea':     '/boba/milk_tea.png',
   'Taro Milk Tea':        '/boba/taro.png',
-  'Matcha Boba Latte':    '/boba/matcha.png',
   'Honeydew Milk Tea':    '/boba/honeydew.png',
   'Thai Milk Tea':        '/boba/thai_tea.png',
   'Iced Americano':       '/boba/coffee.png',
@@ -34,7 +33,6 @@ const TAGS_MAP: Record<string, string[]> = {
   'Brown Sugar Milk Tea': ['SWEET', 'CREAMY', 'BOBA'],
   'Classic Milk Tea':     ['CLASSIC', 'SWEET', 'CAFFEINE'],
   'Taro Milk Tea':        ['CREAMY', 'SWEET', 'CAFFEINE'],
-  'Matcha Boba Latte':    ['EARTHY', 'CREAMY', 'BOBA'],
   'Honeydew Milk Tea':    ['FRUITY', 'LIGHT', 'CREAMY'],
   'Thai Milk Tea':        ['BOLD', 'SWEET', 'CAFFEINE'],
   'Iced Americano':       ['BOLD', 'BITTER', 'CAFFEINE'],
@@ -232,7 +230,7 @@ function MenuCard({ item, onClick }: { item: MenuItem; onClick: () => void }) {
       <div className={styles.cardBody}>
         <div className={styles.cardMeta}>
           <span className={styles.cardCat}>{item.category_name}</span>
-          <span className={styles.cardNekoPick}>neko pick</span>
+          {item.is_bestseller && <span className={styles.cardNekoPick}>neko pick</span>}
         </div>
         <h2 className={styles.cardName}>{item.name}</h2>
         <p className={styles.cardDesc}>{item.description}</p>
