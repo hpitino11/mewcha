@@ -3,11 +3,29 @@ import { createPortal } from 'react-dom';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../lib/api';
 import { useCart } from '../context/CartContext';
-import RitualCupPreview from './RitualCupPreview';
 import EditorialKicker from './shared/EditorialKicker';
 import PawStamp from './shared/PawStamp';
-import type { Option, CartCustomizations } from '../types';
+import type { MenuItem, Option, CartCustomizations } from '../types';
 import styles from './DrinkModal.module.css';
+
+const IMAGE_MAP: Record<string, string> = {
+  'Matcha Latte':         '/boba/matcha.png',
+  'Brown Sugar Milk Tea': '/boba/brown_sugar.png',
+  'Classic Milk Tea':     '/boba/milk_tea.png',
+  'Taro Milk Tea':        '/boba/taro.png',
+  'Matcha Boba Latte':    '/boba/matcha.png',
+  'Honeydew Milk Tea':    '/boba/honeydew.png',
+  'Thai Milk Tea':        '/boba/thai_tea.png',
+  'Iced Americano':       '/boba/coffee.png',
+  'Strawberry Milk Tea':  '/boba/strawberry.png',
+  'Lychee Milk Tea':      '/boba/lychee.png',
+  'Mango Milk Tea':       '/boba/mango.png',
+  'Ceremonial Matcha':    '/boba/cer_matcha.png',
+};
+
+function getImage(item: MenuItem) {
+  return item.image_url || IMAGE_MAP[item.name] || '/boba/shop.png';
+}
 
 interface Props {
   itemId: number;
@@ -87,8 +105,6 @@ export default function DrinkModal({ itemId, onClose }: Props) {
     ...selectedToppings.map(t => t.label.toLowerCase()),
   ].filter(Boolean).join(' · ');
 
-  const isCoffee = item?.category_slug === 'coffee';
-
   return createPortal(
     <div
       className={styles.overlay}
@@ -128,17 +144,8 @@ export default function DrinkModal({ itemId, onClose }: Props) {
                 <p className={styles.drinkDesc}>{item.description}</p>
               </div>
 
-              <div className={styles.cupWrap}>
-                <RitualCupPreview
-                  categorySlug={item.category_slug}
-                  itemName={item.name}
-                  size={selectedSize}
-                  ice={selectedIce}
-                  sweetness={selectedSweetness}
-                  toppings={selectedToppings}
-                  isSeasonal={item.is_seasonal}
-                  isCoffee={isCoffee}
-                />
+              <div className={styles.imgWrap}>
+                <img src={getImage(item)} alt={item.name} className={styles.drinkImg} />
               </div>
 
               {ritualParts && (

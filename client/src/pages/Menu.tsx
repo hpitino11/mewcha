@@ -23,6 +23,10 @@ const IMAGE_MAP: Record<string, string> = {
   'Honeydew Milk Tea':    '/boba/honeydew.png',
   'Thai Milk Tea':        '/boba/thai_tea.png',
   'Iced Americano':       '/boba/coffee.png',
+  'Strawberry Milk Tea':  '/boba/strawberry.png',
+  'Lychee Milk Tea':      '/boba/lychee.png',
+  'Mango Milk Tea':       '/boba/mango.png',
+  'Ceremonial Matcha':    '/boba/cer_matcha.png',
 };
 
 const TAGS_MAP: Record<string, string[]> = {
@@ -34,6 +38,10 @@ const TAGS_MAP: Record<string, string[]> = {
   'Honeydew Milk Tea':    ['FRUITY', 'LIGHT', 'CREAMY'],
   'Thai Milk Tea':        ['BOLD', 'SWEET', 'CAFFEINE'],
   'Iced Americano':       ['BOLD', 'BITTER', 'CAFFEINE'],
+  'Strawberry Milk Tea':  ['FRUITY', 'SWEET', 'LIGHT'],
+  'Lychee Milk Tea':      ['FLORAL', 'LIGHT', 'FRUITY'],
+  'Mango Milk Tea':       ['TROPICAL', 'SWEET', 'FRUITY'],
+  'Ceremonial Matcha':    ['EARTHY', 'PURE', 'CAFFEINE'],
 };
 
 function getImage(item: MenuItem) {

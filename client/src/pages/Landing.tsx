@@ -5,7 +5,7 @@ import DrinkCarousel from '../components/DrinkCarousel';
 import { useReveal } from '../hooks/useReveal';
 import styles from './Landing.module.css';
 
-const MARQUEE_WORDS = ['matcha', 'milk tea', 'taro', 'brown sugar', 'strawberry', 'thai tea', 'honeydew', 'coffee'];
+const MARQUEE_WORDS = ['matcha', 'milk tea', 'taro', 'brown sugar', 'strawberry', 'lychee', 'mango', 'thai tea', 'honeydew', 'coffee'];
 
 export default function Landing() {
   const storeRef = useReveal(0);

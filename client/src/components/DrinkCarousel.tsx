@@ -12,7 +12,6 @@ interface Drink {
   bg:          string;
   accent:      string;
   price:       string;
-  link:        string;
   stamp?:      string;
 }
 
@@ -22,23 +21,21 @@ const DRINKS: Drink[] = [
     label:       'signature',
     tagline:     'stone-ground · oat milk · earthy finish',
     description: 'Stone-ground ceremonial grade matcha with steamed oat milk. Earthy, smooth, and beautifully green.',
-    image:       '/boba/matcha.png',
+    image:       '/boba/cer_matcha.png',
     bg:          '#3d4830',
     accent:      '#8fc47c',
-    price:       '6.50',
-    link:        '/menu/1',
+    price:       '6.00',
     stamp:       'neko pick',
   },
   {
-    name:        'Classic Milk Tea',
-    label:       'timeless',
-    tagline:     'black tea · whole milk · boba',
-    description: 'Strong black tea softened with whole milk and lightly sweetened. The one that started it all.',
-    image:       '/boba/milk_tea.png',
-    bg:          '#2e2318',
-    accent:      '#d4b896',
-    price:       '5.50',
-    link:        '/menu/7',
+    name:        'Strawberry Milk Tea',
+    label:       'fruity',
+    tagline:     'fresh strawberry · milk tea · boba',
+    description: 'Fresh strawberry puree blended into a light black tea base with creamy milk. Sweet, bright, and refreshing.',
+    image:       '/boba/strawberry.png',
+    bg:          '#5c2d38',
+    accent:      '#d48a96',
+    price:       '6.25',
   },
   {
     name:        'Taro Milk Tea',
@@ -48,32 +45,29 @@ const DRINKS: Drink[] = [
     image:       '/boba/taro.png',
     bg:          '#3b2e4a',
     accent:      '#c4a8e0',
-    price:       '6.50',
-    link:        '/menu/2',
+    price:       '6.75',
     stamp:       'seasonal',
   },
   {
     name:        'Brown Sugar Boba',
     label:       'classic',
     tagline:     'brown sugar · boba pearls · milk foam',
-    description: 'Slow-caramelized brown sugar, ceremonial matcha, chewy tapioca pearls, and a velvety oat milk foam.',
+    description: 'Slow-caramelized brown sugar, rich milk tea, chewy tapioca pearls, and a velvety oat milk foam.',
     image:       '/boba/brown_sugar.png',
     bg:          '#3a2215',
     accent:      '#ddbea9',
     price:       '6.75',
-    link:        '/menu/5',
     stamp:       'house favorite',
   },
   {
-    name:        'Strawberry Boba',
-    label:       'fruity',
-    tagline:     'fresh strawberry · milk tea · boba',
-    description: 'Fresh strawberry, creamy milk tea base, and chewy tapioca pearls. Bright, sweet, and refreshing.',
-    image:       '/boba/strawberry.png',
-    bg:          '#5c2d38',
-    accent:      '#d48a96',
+    name:        'Lychee Milk Tea',
+    label:       'floral',
+    tagline:     'lychee · green tea · light cream',
+    description: 'Delicate lychee flavor steeped into green tea with a touch of cream. Floral, light, and subtly sweet.',
+    image:       '/boba/lychee.png',
+    bg:          '#3a2235',
+    accent:      '#dba8cc',
     price:       '6.25',
-    link:        '/menu/3',
   },
   {
     name:        'Thai Milk Tea',
@@ -83,8 +77,17 @@ const DRINKS: Drink[] = [
     image:       '/boba/thai_tea.png',
     bg:          '#4a3020',
     accent:      '#c09055',
-    price:       '5.75',
-    link:        '/menu/6',
+    price:       '6.50',
+  },
+  {
+    name:        'Mango Milk Tea',
+    label:       'tropical',
+    tagline:     'ripe mango · milk tea · boba',
+    description: 'Ripe mango blended with smooth milk tea and a hint of cream. Tropical, bright, and naturally sweet.',
+    image:       '/boba/mango.png',
+    bg:          '#4a3510',
+    accent:      '#d4a840',
+    price:       '6.25',
   },
   {
     name:        'Honeydew Boba',
@@ -94,8 +97,17 @@ const DRINKS: Drink[] = [
     image:       '/boba/honeydew.png',
     bg:          '#2a3d2e',
     accent:      '#a8d4a0',
-    price:       '6.00',
-    link:        '/menu/4',
+    price:       '6.50',
+  },
+  {
+    name:        'Classic Milk Tea',
+    label:       'timeless',
+    tagline:     'black tea · whole milk · boba',
+    description: 'Strong black tea softened with whole milk and lightly sweetened. The one that started it all.',
+    image:       '/boba/milk_tea.png',
+    bg:          '#2e2318',
+    accent:      '#d4b896',
+    price:       '5.75',
   },
   {
     name:        'Coffee Boba',
@@ -105,8 +117,7 @@ const DRINKS: Drink[] = [
     image:       '/boba/coffee.png',
     bg:          '#1e1810',
     accent:      '#c8a96e',
-    price:       '6.75',
-    link:        '/menu/8',
+    price:       '5.00',
   },
 ];
 
@@ -165,7 +176,7 @@ export default function DrinkCarousel() {
     >
       <div className={styles.noise} aria-hidden="true" />
 
-      {/* ════ Right: image carousel — absolutely fills the right half of hero ════ */}
+      {/* ════ Right: image carousel ════ */}
       <div className={styles.cupsCol} aria-hidden="true">
         <div className={styles.cupsTrack}>
           {DRINKS.map((d, i) => {
@@ -191,7 +202,6 @@ export default function DrinkCarousel() {
               </motion.div>
             );
           })}
-
         </div>
       </div>
 
@@ -248,7 +258,7 @@ export default function DrinkCarousel() {
                   ${drink.price}
                 </span>
                 <Link
-                  to={drink.link}
+                  to="/menu"
                   className={styles.btnPrimary}
                   style={{ backgroundColor: drink.accent, color: drink.bg }}
                 >

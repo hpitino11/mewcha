@@ -94,6 +94,46 @@ exports.seed = async (knex) => {
       is_seasonal: false,
       is_bestseller: false,
     },
+    {
+      id: 9,
+      category_id: 2,
+      name: 'Strawberry Milk Tea',
+      description: 'Fresh strawberry puree blended into a light black tea base with creamy milk. Sweet, bright, and refreshing.',
+      base_price: 6.25,
+      is_available: true,
+      is_seasonal: false,
+      is_bestseller: false,
+    },
+    {
+      id: 10,
+      category_id: 2,
+      name: 'Lychee Milk Tea',
+      description: 'Delicate lychee flavor steeped into green tea with a touch of cream. Floral, light, and subtly sweet.',
+      base_price: 6.25,
+      is_available: true,
+      is_seasonal: false,
+      is_bestseller: false,
+    },
+    {
+      id: 11,
+      category_id: 2,
+      name: 'Mango Milk Tea',
+      description: 'Ripe mango blended with smooth milk tea and a hint of cream. Tropical, bright, and naturally sweet.',
+      base_price: 6.25,
+      is_available: true,
+      is_seasonal: false,
+      is_bestseller: false,
+    },
+    {
+      id: 12,
+      category_id: 1,
+      name: 'Ceremonial Matcha',
+      description: 'Single-ingredient ceremonial-grade matcha whisked with cold water. Nothing added, nothing taken away.',
+      base_price: 6.00,
+      is_available: true,
+      is_seasonal: false,
+      is_bestseller: false,
+    },
   ]);
 
   await knex('option_groups').insert([
@@ -117,13 +157,13 @@ exports.seed = async (knex) => {
     { group_id: 3, label: '75% Sweet',       price_modifier: 0 },
     { group_id: 3, label: '100% Sweet',      price_modifier: 0 },
     { group_id: 4, label: 'Boba Pearls',     price_modifier: 0.75 },
-    { group_id: 4, label: 'Lychee Jelly',   price_modifier: 0.75 },
+    { group_id: 4, label: 'Lychee Jelly',    price_modifier: 0.75 },
     { group_id: 4, label: 'Red Bean',        price_modifier: 0.75 },
     { group_id: 4, label: 'Aloe',            price_modifier: 0.75 },
     { group_id: 4, label: 'Pudding',         price_modifier: 0.75 },
   ]);
 
-  const allItemIds = [1, 2, 3, 4, 5, 6, 7, 8];
+  const allItemIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   const rows = [];
   for (const item_id of allItemIds) {
     for (const option_group_id of [1, 2, 3, 4]) {
