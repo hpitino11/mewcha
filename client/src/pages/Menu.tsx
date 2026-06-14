@@ -4,8 +4,6 @@ import { useQuery } from '@tanstack/react-query';
 import { api } from '../lib/api';
 import type { MenuItem } from '../types';
 import EditorialKicker from '../components/shared/EditorialKicker';
-import PawStamp from '../components/shared/PawStamp';
-import EmptyState from '../components/shared/EmptyState';
 import styles from './Menu.module.css';
 
 const TABS = [
@@ -15,6 +13,20 @@ const TABS = [
   { label: 'Coffee',   slug: 'coffee' },
   { label: 'Seasonal', slug: 'seasonal' },
 ];
+
+const IMAGE_MAP: Record<string, string> = {
+  'Ceremonial Matcha Latte': '/boba/cer_matcha.png',
+  'Brown Sugar Milk Tea':    '/boba/brown_sugar.png',
+  'Hojicha Cold Brew':       '/boba/matcha.png',
+  'Iced Americano':          '/boba/coffee.png',
+  'Taro Milk Tea':           '/boba/taro.png',
+  'Strawberry Lychee Boba':  '/boba/strawberry.png',
+  'Dirty Chai Latte':        '/boba/milk_tea.png',
+};
+
+function getImage(item: MenuItem) {
+  return item.image_url || IMAGE_MAP[item.name] || '/boba/shop.png';
+}
 
 export default function Menu() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -35,18 +47,62 @@ export default function Menu() {
     slug === 'all' ? setSearchParams({}) : setSearchParams({ category: slug });
   };
 
-  const featured = items?.filter(i => i.is_seasonal || i.is_bestseller).slice(0, 1)[0];
+  const featured = items?.find(i => i.is_bestseller || i.is_seasonal);
   const regular  = items?.filter(i => i !== featured) ?? [];
 
   return (
     <main className={styles.page}>
 
-      {/* ── Header ── */}
-      <div className={styles.header}>
-        <EditorialKicker label="the menu" />
-        <h1 className={styles.title}>Every cup,<br /><em>yours.</em></h1>
-        <p className={styles.subtitle}>earthy · creamy · bright · bold</p>
-      </div>
+      {/* ── Hero ── */}
+      <section className={styles.hero}>
+        <div className={styles.heroLeft}>
+          <EditorialKicker label="the menu" />
+          <h1 className={styles.heroTitle}>Every cup,<br /><em>yours.</em></h1>
+          <p className={styles.heroBody}>
+            Thoughtful ingredients. Balanced flavors. Brewed for the way you like it.
+          </p>
+          <div className={styles.heroPills}>
+            <span>earthy</span>
+            <span>creamy</span>
+            <span>bright</span>
+            <span>bold</span>
+          </div>
+        </div>
+
+        {featured && active === 'all' ? (
+          <Link to={`/menu/${featured.id}`} className={styles.heroSpotlight}>
+            <div className={styles.spotlightContent}>
+              <div className={styles.spotlightMeta}>
+                <EditorialKicker
+                  label={featured.is_seasonal ? 'seasonal pick' : 'neko pick'}
+                  className={styles.spotlightKicker}
+                />
+                {featured.is_seasonal
+                  ? <span className={styles.spotlightBadge}>Seasonal</span>
+                  : <span className={styles.spotlightBadge}>Bestseller</span>
+                }
+              </div>
+              <h2 className={styles.spotlightName}>{featured.name}</h2>
+              <p className={styles.spotlightDesc}>{featured.description}</p>
+              <div className={styles.spotlightFooter}>
+                <span className={styles.spotlightPrice}>
+                  from ${parseFloat(featured.base_price).toFixed(2)}
+                </span>
+                <span className={styles.spotlightCta}>Order now</span>
+              </div>
+            </div>
+            <div className={styles.spotlightImgWrap}>
+              <img
+                src={getImage(featured)}
+                alt={featured.name}
+                className={styles.spotlightImg}
+              />
+            </div>
+          </Link>
+        ) : (
+          <div className={styles.heroSpotlightEmpty} />
+        )}
+      </section>
 
       {/* ── Category tabs ── */}
       <div className={styles.tabsWrap}>
@@ -65,93 +121,69 @@ export default function Menu() {
         </div>
       </div>
 
+      {/* ── Grid ── */}
       {isLoading ? (
         <div className={styles.grid}>
-          {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} index={i} />)}
+          {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
         </div>
       ) : items?.length === 0 ? (
-        <EmptyState
-          title="Nothing here yet."
-          body="No drinks in this category at the moment."
-          action={{ label: 'See all drinks', to: '/menu' }}
-        />
+        <div className={styles.empty}>
+          <p>No drinks in this category yet.</p>
+          <button className={styles.emptyLink} onClick={() => handleTab('all')}>
+            See all drinks
+          </button>
+        </div>
       ) : (
-        <>
-          {/* Featured spotlight */}
-          {featured && active === 'all' && (
-            <Link to={`/menu/${featured.id}`} className={styles.spotlight}>
-              <div className={styles.spotlightText}>
-                <EditorialKicker
-                  label={featured.is_seasonal ? 'seasonal pick' : 'neko pick'}
-                />
-                <h2 className={styles.spotlightName}>{featured.name}</h2>
-                <p className={styles.spotlightDesc}>{featured.description}</p>
-                <div className={styles.spotlightMeta}>
-                  <span className={styles.spotlightPrice}>
-                    from ${parseFloat(featured.base_price).toFixed(2)}
-                  </span>
-                  <span className={styles.spotlightCta}>
-                    <PawStamp size={12} color="var(--color-accent)" />
-                    Customize
-                  </span>
-                </div>
-              </div>
-              <div className={styles.spotlightBadge}>
-                {featured.is_seasonal ? 'Seasonal' : 'Bestseller'}
-              </div>
-            </Link>
-          )}
-
-          {/* Main grid */}
-          <div className={styles.grid}>
-            {(featured && active === 'all' ? regular : items ?? []).map((item, i) => (
-              <MenuCard key={item.id} item={item} index={i} />
-            ))}
-          </div>
-        </>
+        <div className={styles.grid}>
+          {(featured && active === 'all' ? regular : items ?? []).map(item => (
+            <MenuCard key={item.id} item={item} />
+          ))}
+        </div>
       )}
     </main>
   );
 }
 
-function MenuCard({ item, index }: { item: MenuItem; index: number }) {
-  const num = String(index + 1).padStart(2, '0');
+function MenuCard({ item }: { item: MenuItem }) {
   return (
     <Link to={`/menu/${item.id}`} className={styles.card}>
-      <div className={styles.cardTop}>
-        <span className={styles.cardNum}>{num}</span>
+      <div className={styles.cardImgWrap}>
+        <img
+          src={getImage(item)}
+          alt={item.name}
+          className={styles.cardImg}
+        />
+        {item.is_bestseller && <span className={styles.cardBadge}>Bestseller</span>}
+        {item.is_seasonal   && <span className={styles.cardBadgeSeasonal}>Seasonal</span>}
+      </div>
+
+      <div className={styles.cardBody}>
         <span className={styles.cardCat}>{item.category_name}</span>
-      </div>
-
-      <h2 className={styles.cardName}>{item.name}</h2>
-      <p className={styles.cardDesc}>{item.description}</p>
-
-      <div className={styles.cardBottom}>
-        <span className={styles.cardPrice}>from ${parseFloat(item.base_price).toFixed(2)}</span>
-        <div className={styles.cardBadges}>
-          {item.is_bestseller && <span className={styles.badgeBest}>★</span>}
-          {item.is_seasonal   && <span className={styles.badgeSeasonal}>Seasonal</span>}
+        <h2 className={styles.cardName}>{item.name}</h2>
+        <p className={styles.cardDesc}>{item.description}</p>
+        <div className={styles.cardFooter}>
+          <span className={styles.cardPrice}>
+            from ${parseFloat(item.base_price).toFixed(2)}
+          </span>
+          <span className={styles.cardCta}>Order now</span>
         </div>
-      </div>
-
-      <div className={styles.cardHover} aria-hidden="true">
-        <PawStamp size={14} color="var(--color-accent)" />
-        <span>customize →</span>
       </div>
     </Link>
   );
 }
 
-function SkeletonCard({ index: _index }: { index: number }) {
+function SkeletonCard() {
   return (
     <div className={styles.card} style={{ pointerEvents: 'none' }}>
-      <div className={styles.cardTop}>
-        <div className={styles.skel} style={{ width: 24, height: 10, borderRadius: 2 }} />
-        <div className={styles.skel} style={{ width: 48, height: 10, borderRadius: 2 }} />
+      <div className={styles.cardImgWrap}>
+        <div className={styles.skel} style={{ width: '100%', height: '100%', borderRadius: 'var(--radius-md)' }} />
       </div>
-      <div className={styles.skel} style={{ height: 20, width: '65%', borderRadius: 3, margin: '0.75rem 0 0.375rem' }} />
-      <div className={styles.skel} style={{ height: 12, width: '90%', borderRadius: 3, marginBottom: 4 }} />
-      <div className={styles.skel} style={{ height: 12, width: '70%', borderRadius: 3 }} />
+      <div className={styles.cardBody}>
+        <div className={styles.skel} style={{ width: 56, height: 10, borderRadius: 2, marginBottom: 10 }} />
+        <div className={styles.skel} style={{ width: '70%', height: 18, borderRadius: 3, marginBottom: 6 }} />
+        <div className={styles.skel} style={{ width: '90%', height: 10, borderRadius: 3, marginBottom: 4 }} />
+        <div className={styles.skel} style={{ width: '60%', height: 10, borderRadius: 3 }} />
+      </div>
     </div>
   );
 }
