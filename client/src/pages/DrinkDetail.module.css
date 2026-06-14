@@ -93,8 +93,8 @@
 
 /* Cup preview — cream background */
 .cupWrap {
-  background: #ede7d8;
-  border: 1px solid #d9d0bf;
+  background: #3f4238;
+  border: 1px solid rgba(255,255,255,0.06);
   border-radius: var(--radius-md);
   height: 360px;
   display: flex;

@@ -13,59 +13,19 @@ interface Props {
   isCoffee?:    boolean;
 }
 
-/* ── Per-drink liquid gradient stops ──────────────────────── */
-interface GStop { offset: string; color: string; opacity: number; }
-
-function getDrinkGradient(slug: string, name: string): GStop[] {
+/* ── Muted, editorial drink colors — matches loader aesthetic ── */
+function getDrinkColors(slug: string, name: string): [string, string] {
   const n = name.toLowerCase();
-  if (n.includes('matcha')) return [
-    { offset: '0%',   color: '#d8ecc0', opacity: 0.48 },
-    { offset: '16%',  color: '#9ecc74', opacity: 0.84 },
-    { offset: '40%',  color: '#58a040', opacity: 0.95 },
-    { offset: '72%',  color: '#367028', opacity: 0.98 },
-    { offset: '100%', color: '#1e4c18', opacity: 1.00 },
-  ];
-  if (n.includes('taro')) return [
-    { offset: '0%',   color: '#ecddf4', opacity: 0.44 },
-    { offset: '28%',  color: '#c4a0d8', opacity: 0.86 },
-    { offset: '70%',  color: '#9068bc', opacity: 0.97 },
-    { offset: '100%', color: '#684898', opacity: 1.00 },
-  ];
-  if (n.includes('honeydew')) return [
-    { offset: '0%',   color: '#d8f0cc', opacity: 0.40 },
-    { offset: '30%',  color: '#8cd878', opacity: 0.85 },
-    { offset: '100%', color: '#429a30', opacity: 0.98 },
-  ];
-  if (n.includes('thai')) return [
-    { offset: '0%',   color: '#f4e2c0', opacity: 0.44 },
-    { offset: '26%',  color: '#e09c48', opacity: 0.88 },
-    { offset: '65%',  color: '#b86018', opacity: 0.97 },
-    { offset: '100%', color: '#7e380a', opacity: 1.00 },
-  ];
-  if (n.includes('brown sugar')) return [
-    { offset: '0%',   color: '#f4e2c0', opacity: 0.40 },
-    { offset: '26%',  color: '#d09c58', opacity: 0.86 },
-    { offset: '65%',  color: '#a46028', opacity: 0.97 },
-    { offset: '100%', color: '#6a360e', opacity: 1.00 },
-  ];
-  if (slug === 'coffee') return [
-    { offset: '0%',   color: '#e8d8c0', opacity: 0.38 },
-    { offset: '24%',  color: '#b88858', opacity: 0.86 },
-    { offset: '62%',  color: '#784828', opacity: 0.97 },
-    { offset: '100%', color: '#482208', opacity: 1.00 },
-  ];
-  /* classic milk tea + catch-all */
-  return [
-    { offset: '0%',   color: '#f0e8d8', opacity: 0.38 },
-    { offset: '28%',  color: '#d4b888', opacity: 0.84 },
-    { offset: '68%',  color: '#a88048', opacity: 0.96 },
-    { offset: '100%', color: '#785428', opacity: 1.00 },
-  ];
+  if (n.includes('matcha'))      return ['#7a8070', '#525846'];
+  if (n.includes('taro'))        return ['#9888aa', '#706080'];
+  if (n.includes('honeydew'))    return ['#7a9268', '#527848'];
+  if (n.includes('thai'))        return ['#b08040', '#886020'];
+  if (n.includes('brown sugar')) return ['#a07848', '#785428'];
+  if (slug === 'coffee')         return ['#806048', '#584028'];
+  return ['#a89070', '#806850']; /* classic milk tea / default */
 }
 
-/* ── Helpers ───────────────────────────────────────────────── */
-
-/* Cup interior top Y — cup body runs y=74→y=289, range=215 */
+/* ── Liquid fill Y — cup interior y=74→289, range=215 ── */
 function getLiquidTop(label: string | undefined): number {
   if (!label) return 132;
   if (label.startsWith('Small'))  return 164;
@@ -80,43 +40,25 @@ function getCupScale(label: string | undefined): number {
   return 1;
 }
 
-function getIceCount(label: string | undefined): number {
-  if (!label) return 4;
-  if (label.startsWith('No'))    return 0;
-  if (label.startsWith('Light')) return 2;
-  if (label.startsWith('Extra')) return 6;
-  return 4;
-}
-
 function getSweetnessOpacity(label: string | undefined): number {
-  if (!label) return 0.18;
-  return (parseInt(label) / 100) * 0.34;
+  if (!label) return 0.12;
+  return (parseInt(label) / 100) * 0.26;
 }
 
-/* ── Topping positions — calibrated to clip "14,74 186,74 164,289 36,289" ── */
+/* ── Topping positions (clip "14,74 186,74 164,289 36,289") ── */
 
-/* 20 boba pearls in 3 natural rows with varied radii */
 const BOBA_PEARLS = [
-  /* bottom row */ { cx: 44, cy: 274, r: 7.0 }, { cx: 59, cy: 271, r: 7.5 },
+  /* bottom row — 8 */ { cx: 44, cy: 274, r: 7.0 }, { cx: 59, cy: 271, r: 7.5 },
   { cx: 74, cy: 275, r: 7.0 }, { cx: 89, cy: 271, r: 7.5 },
   { cx: 104, cy: 275, r: 7.0 }, { cx: 119, cy: 271, r: 7.5 },
   { cx: 134, cy: 275, r: 7.0 }, { cx: 149, cy: 271, r: 7.0 },
-  /* second row */ { cx: 52, cy: 260, r: 6.5 }, { cx: 67, cy: 263, r: 6.0 },
+  /* second row — 7 */ { cx: 52, cy: 260, r: 6.5 }, { cx: 67, cy: 263, r: 6.0 },
   { cx: 82, cy: 259, r: 6.5 }, { cx: 97, cy: 263, r: 6.0 },
   { cx: 112, cy: 259, r: 6.5 }, { cx: 127, cy: 263, r: 6.0 },
   { cx: 143, cy: 259, r: 6.0 },
-  /* top row */    { cx: 59, cy: 249, r: 5.5 }, { cx: 77, cy: 252, r: 5.0 },
+  /* top row — 5 */ { cx: 59, cy: 249, r: 5.5 }, { cx: 77, cy: 252, r: 5.0 },
   { cx: 95, cy: 249, r: 5.5 }, { cx: 113, cy: 252, r: 5.0 },
   { cx: 130, cy: 249, r: 5.5 },
-];
-
-const ICE = [
-  { x: 32,  y: 166, w: 40, h: 24, r: -14 },
-  { x: 106, y: 180, w: 36, h: 22, r:  10 },
-  { x: 138, y: 160, w: 34, h: 22, r:  -9 },
-  { x: 50,  y: 216, w: 38, h: 24, r:  16 },
-  { x: 112, y: 222, w: 34, h: 22, r: -12 },
-  { x: 30,  y: 220, w: 32, h: 21, r:   6 },
 ];
 
 const ALOE = [
@@ -127,7 +69,6 @@ const ALOE = [
   { x: 140, y: 263, w: 8, h: 18, r: -5 },
 ];
 
-/* oval beans */
 const RED_BEAN = [
   { cx: 46, cy: 268 }, { cx: 62, cy: 273 }, { cx: 78, cy: 268 },
   { cx: 94, cy: 272 }, { cx: 110, cy: 267 }, { cx: 126, cy: 272 },
@@ -150,16 +91,14 @@ const PUDDING = [
   { x: 148, y: 262, w: 23, h: 18 },
 ];
 
-/* ── Component ─────────────────────────────────────────────── */
 export default function RitualCupPreview({
-  categorySlug, itemName, size, ice, sweetness, toppings, isSeasonal, isCoffee,
+  categorySlug, itemName, size, sweetness, toppings, isSeasonal, isCoffee,
 }: Props) {
   const uid        = useId().replace(/:/g, '');
   const liquidTop  = getLiquidTop(size?.label);
   const scale      = getCupScale(size?.label);
-  const iceCount   = getIceCount(ice?.label);
   const sweetAlpha = getSweetnessOpacity(sweetness?.label);
-  const gradStops  = getDrinkGradient(categorySlug, itemName);
+  const [colorTop, colorBot] = getDrinkColors(categorySlug, itemName);
 
   const hasBoba    = toppings.some(t => t.label.toLowerCase().includes('boba'));
   const hasLychee  = toppings.some(t => t.label.toLowerCase().includes('lychee'));
@@ -168,7 +107,6 @@ export default function RitualCupPreview({
   const hasPudding = toppings.some(t => t.label.toLowerCase().includes('pudding'));
   const showSteam  = isCoffee || categorySlug === 'coffee';
 
-  /* Cup geometry — centred on x=100 */
   const CX = 100;
 
   return (
@@ -180,61 +118,33 @@ export default function RitualCupPreview({
         aria-hidden="true"
       >
         <defs>
-          {/* Clip to cup interior */}
           <clipPath id={`${uid}c`}>
             <polygon points="14,74 186,74 164,289 36,289" />
           </clipPath>
 
-          {/* Liquid gradient — objectBoundingBox so it always spans the liquid rect */}
+          {/* Liquid — gentle 2-stop gradient */}
           <linearGradient id={`${uid}liq`} x1="0" x2="0" y1="0" y2="1">
-            {gradStops.map((s, i) => (
-              <stop key={i} offset={s.offset} stopColor={s.color} stopOpacity={s.opacity} />
-            ))}
+            <stop offset="0%"   stopColor={colorTop} stopOpacity="0.92" />
+            <stop offset="100%" stopColor={colorBot} stopOpacity="1"    />
           </linearGradient>
 
-          {/* Foam / milk layer at liquid surface */}
-          <linearGradient id={`${uid}foam`} x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%"   stopColor="#ede8da" stopOpacity="0.60" />
-            <stop offset="100%" stopColor="#ede8da" stopOpacity="0"    />
-          </linearGradient>
-
-          {/* Cup wall sheen — left bright, right dark */}
-          <linearGradient id={`${uid}wall`} x1="0" x2="1" y1="0" y2="0">
-            <stop offset="0%"   stopColor="white" stopOpacity="0.38" />
-            <stop offset="13%"  stopColor="white" stopOpacity="0"    />
-            <stop offset="87%"  stopColor="black" stopOpacity="0"    />
-            <stop offset="100%" stopColor="black" stopOpacity="0.09" />
-          </linearGradient>
-
-          {/* Pearl 3-D radial */}
+          {/* Pearl — subtle 3-D radial */}
           <radialGradient id={`${uid}pearl`} cx="38%" cy="34%" r="58%">
-            <stop offset="0%"   stopColor="#5a3e28" />
-            <stop offset="42%"  stopColor="#1c0c04" />
+            <stop offset="0%"   stopColor="#3c2c1e" />
+            <stop offset="50%"  stopColor="#160a04" />
             <stop offset="100%" stopColor="#0c0602" />
           </radialGradient>
 
-          {/* Pudding golden gradient */}
+          {/* Pudding */}
           <linearGradient id={`${uid}pud`} x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%"   stopColor="#f6e098" />
-            <stop offset="100%" stopColor="#dab850" stopOpacity="0.92" />
-          </linearGradient>
-
-          {/* Lid gradient — top light, bottom shaded */}
-          <linearGradient id={`${uid}lid`} x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%"   stopColor="#d8d0c6" />
-            <stop offset="100%" stopColor="#b8b0a4" />
-          </linearGradient>
-
-          {/* Bottom ellipse gradient */}
-          <linearGradient id={`${uid}bot`} x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%"   stopColor="#ccc4ba" />
-            <stop offset="100%" stopColor="#aaa29a" />
+            <stop offset="0%"   stopColor="#f2dc90" />
+            <stop offset="100%" stopColor="#d4b048" stopOpacity="0.92" />
           </linearGradient>
         </defs>
 
         {/* ── Drop shadow ── */}
-        <ellipse cx={CX} cy={300} rx={60} ry={7}   fill="rgba(46,36,24,0.16)" />
-        <ellipse cx={CX} cy={302} rx={46} ry={4.5} fill="rgba(46,36,24,0.09)" />
+        <ellipse cx={CX} cy={298} rx={58} ry={6}   fill="rgba(0,0,0,0.22)" />
+        <ellipse cx={CX} cy={300} rx={44} ry={4}   fill="rgba(0,0,0,0.12)" />
 
         {/* ── Steam (hot drinks) ── */}
         {showSteam && (
@@ -246,108 +156,58 @@ export default function RitualCupPreview({
         )}
 
         {/* ── Straw ── */}
-        <rect x="94" y="-28" width="12" height="110" rx="6"
-          fill="#b7b7a4" opacity="0.72" className={styles.straw} />
-        <rect x="95" y="-28" width="4"  height="110" rx="2"
-          fill="rgba(255,255,255,0.19)" />
+        <rect x="94" y="-28" width="12" height="104" rx="6"
+          fill="#b7b7a4" opacity="0.7" className={styles.straw} />
+        <rect x="95" y="-28" width="4"  height="104" rx="2"
+          fill="rgba(255,255,255,0.18)" />
 
         {/* ── Lid ── */}
-        <rect x="8"  y="52" width="184" height="26" rx="13" fill={`url(#${uid}lid)`} />
-        {/* Lid top shine */}
-        <rect x="8"  y="52" width="184" height="10" rx="5"  fill="rgba(255,255,255,0.16)" />
-        {/* Lid bottom inner shadow */}
-        <rect x="8"  y="70" width="184" height="8"  rx="0"  fill="rgba(80,74,66,0.08)" />
-        {/* Straw socket */}
-        <ellipse cx={CX} cy="60" rx="9" ry="4"
-          fill="#b8b0a8"
-          stroke="rgba(140,134,124,0.5)"
-          strokeWidth="0.6"
-        />
+        <rect x="8"  y="52" width="184" height="26" rx="13" fill="#c8bfb0" />
+        <rect x="8"  y="52" width="184" height="10" rx="5"  fill="rgba(255,255,255,0.14)" />
 
-        {/* ── Cup body — barely-there tint, contents show through ── */}
-        <polygon
-          points="10,74 190,74 168,291 32,291"
-          fill="rgba(215,210,200,0.08)"
-        />
+        {/* ── Cup body — opaque, loader style ── */}
+        <polygon points="10,74 190,74 168,291 32,291" fill="#d8d0c5" />
+        <ellipse cx={CX} cy={291} rx={68} ry={10} fill="#c8bfb0" />
+        <ellipse cx={CX} cy={299} rx={54} ry={5}  fill="rgba(0,0,0,0.14)" />
 
-        {/* ── Contents (clipped to cup interior) ── */}
+        {/* ── Contents (clipped) ── */}
         <g clipPath={`url(#${uid}c)`}>
 
-          {/* Liquid base */}
+          {/* Liquid */}
           <rect x="0" y={liquidTop} width="200" height="300"
             fill={`url(#${uid}liq)`}
             className={styles.liquid}
           />
 
-          {/* Sweetness cream overlay */}
+          {/* Sweetness tint */}
           {sweetAlpha > 0 && (
             <rect x="0" y={liquidTop} width="200" height="300"
-              fill="#f0e8d8"
-              opacity={sweetAlpha}
+              fill="#f0e8d8" opacity={sweetAlpha}
               className={styles.sweetnessLayer}
             />
           )}
 
-          {/* Foam / milk layer at surface */}
-          <rect x="0" y={liquidTop} width="200" height="26"
-            fill={`url(#${uid}foam)`}
+          {/* Surface shimmer */}
+          <ellipse cx={CX} cy={liquidTop + 4} rx={80} ry={4}
+            fill="rgba(255,255,255,0.12)"
             className={styles.liquid}
-          />
-
-          {/* Meniscus shimmer */}
-          <ellipse cx={CX} cy={liquidTop + 4} rx={82} ry={4.5}
-            fill="rgba(255,255,255,0.17)"
-            className={styles.liquid}
-          />
-
-          {/* Interior left wall reflection — inside glass effect */}
-          <rect x="14" y="74" width="12" height="215"
-            fill="rgba(255,255,255,0.07)"
           />
 
           {/* Pudding */}
           {hasPudding && PUDDING.map((p, i) => (
             <g key={i} className={styles.topping} style={{ animationDelay: `${i * 35}ms` }}>
               <rect x={p.x} y={p.y} width={p.w} height={p.h} rx="5"
-                fill={`url(#${uid}pud)`}
-                opacity="0.92"
-              />
-              <rect x={p.x + 2} y={p.y + 2} width={p.w * 0.55} height={p.h * 0.38} rx="2"
-                fill="rgba(255,255,255,0.22)"
-              />
-            </g>
-          ))}
-
-          {/* Ice cubes */}
-          {ICE.slice(0, iceCount).map((cube, i) => (
-            <g key={i}
-              transform={`rotate(${cube.r},${cube.x + cube.w / 2},${cube.y + cube.h / 2})`}
-              className={styles.iceCube}
-              style={{ animationDelay: `${i * 45}ms` }}
-            >
-              <rect x={cube.x} y={cube.y} width={cube.w} height={cube.h} rx="4"
-                fill="rgba(255,255,255,0.78)"
-                stroke="rgba(200,220,240,0.4)"
-                strokeWidth="0.6"
-              />
-              <rect x={cube.x + 4} y={cube.y + 3} width={cube.w * 0.38} height={cube.h * 0.32} rx="2"
-                fill="rgba(255,255,255,0.50)"
-              />
-              <rect x={cube.x + 2} y={cube.y + cube.h - 6} width={cube.w - 4} height="3" rx="1"
-                fill="rgba(180,210,240,0.18)"
-              />
+                fill={`url(#${uid}pud)`} opacity="0.92" />
+              <rect x={p.x + 2} y={p.y + 2} width={p.w * 0.5} height={p.h * 0.36} rx="2"
+                fill="rgba(255,255,255,0.20)" />
             </g>
           ))}
 
           {/* Red bean — oval pieces */}
           {hasRedBean && RED_BEAN.map((b, i) => (
             <g key={i} className={styles.topping} style={{ animationDelay: `${i * 28}ms` }}>
-              <ellipse cx={b.cx} cy={b.cy} rx="5.5" ry="4.2"
-                fill="#6e2e1e" opacity="0.94"
-              />
-              <ellipse cx={b.cx - 1} cy={b.cy - 1.2} rx="2" ry="1.5"
-                fill="rgba(255,255,255,0.12)"
-              />
+              <ellipse cx={b.cx} cy={b.cy} rx="5.5" ry="4.2" fill="#6e2e1e" opacity="0.94" />
+              <ellipse cx={b.cx - 1} cy={b.cy - 1.2} rx="2" ry="1.5" fill="rgba(255,255,255,0.11)" />
             </g>
           ))}
 
@@ -359,12 +219,12 @@ export default function RitualCupPreview({
               style={{ animationDelay: `${i * 32}ms` }}
             >
               <rect x={a.x} y={a.y} width={a.w} height={a.h} rx="2.5"
-                fill="rgba(152,210,140,0.65)"
-                stroke="rgba(96,168,80,0.32)"
+                fill="rgba(148,206,136,0.62)"
+                stroke="rgba(92,162,76,0.30)"
                 strokeWidth="0.6"
               />
-              <rect x={a.x + 1} y={a.y + 2} width={a.w * 0.5} height={a.h * 0.42} rx="1"
-                fill="rgba(200,240,190,0.30)"
+              <rect x={a.x + 1} y={a.y + 2} width={a.w * 0.5} height={a.h * 0.4} rx="1"
+                fill="rgba(195,238,185,0.28)"
               />
             </g>
           ))}
@@ -377,35 +237,33 @@ export default function RitualCupPreview({
               style={{ animationDelay: `${i * 30}ms` }}
             >
               <rect x={l.x} y={l.y} width="14" height="14" rx="3.5"
-                fill="rgba(218,238,175,0.58)"
-                stroke="rgba(170,210,110,0.36)"
+                fill="rgba(214,234,170,0.56)"
+                stroke="rgba(166,206,106,0.34)"
                 strokeWidth="0.6"
               />
               <rect x={l.x + 2} y={l.y + 2} width="6" height="5" rx="1.5"
-                fill="rgba(240,255,215,0.32)"
+                fill="rgba(238,252,210,0.30)"
               />
             </g>
           ))}
 
-          {/* Boba pearls — shadow + pearl + highlight grouped so they animate together */}
+          {/* Boba pearls — shadow + pearl + highlight grouped so all animate together */}
           {hasBoba && BOBA_PEARLS.map((b, i) => {
-            /* stagger: top row first (drops from above), bottom row last */
-            const row = i < 15 ? (i < 8 ? 2 : 1) : 0;
+            /* top row drops first, bottom row last — feels like settling */
+            const row = i >= 15 ? 0 : i >= 8 ? 1 : 2;
             const delay = row * 55 + (i % 8) * 10;
             return (
               <g key={i} className={styles.topping} style={{ animationDelay: `${delay}ms` }}>
                 <ellipse
                   cx={b.cx + 0.5} cy={b.cy + b.r * 0.58}
                   rx={b.r * 0.88} ry={b.r * 0.27}
-                  fill="rgba(0,0,0,0.22)"
+                  fill="rgba(0,0,0,0.28)"
                 />
-                <circle cx={b.cx} cy={b.cy} r={b.r}
-                  fill={`url(#${uid}pearl)`}
-                />
+                <circle cx={b.cx} cy={b.cy} r={b.r} fill={`url(#${uid}pearl)`} />
                 <circle
                   cx={b.cx - b.r * 0.28} cy={b.cy - b.r * 0.30}
                   r={b.r * 0.30}
-                  fill="rgba(255,255,255,0.15)"
+                  fill="rgba(255,255,255,0.14)"
                 />
               </g>
             );
@@ -413,40 +271,18 @@ export default function RitualCupPreview({
 
         </g>
 
-        {/* ── Cup wall sheen — drawn over contents for clear-plastic look ── */}
-        <polygon
-          points="10,74 190,74 168,291 32,291"
-          fill={`url(#${uid}wall)`}
-        />
-
-        {/* ── Cup rim (lip at top of cup body) ── */}
-        <ellipse cx={CX} cy={74} rx={90} ry={8}
-          fill="rgba(210,204,194,0.22)"
-          stroke="rgba(175,168,158,0.52)"
-          strokeWidth="1.1"
-        />
-
         {/* ── Cup outline ── */}
         <polygon
           points="10,74 190,74 168,291 32,291"
           fill="none"
-          stroke="rgba(172,165,154,0.50)"
-          strokeWidth="1.2"
+          stroke="#b7b7a4"
+          strokeWidth="1.5"
           strokeLinejoin="round"
         />
-
-        {/* ── Cup bottom ── */}
-        <ellipse cx={CX} cy={291} rx={68} ry={10}
-          fill={`url(#${uid}bot)`}
-          stroke="rgba(155,148,138,0.45)"
-          strokeWidth="0.75"
-        />
+        <line x1="10" y1="74" x2="190" y2="74" stroke="#b7b7a4" strokeWidth="1" />
 
         {/* ── Brand stripe ── */}
-        <polygon
-          points="11,76 189,76 187,94 13,94"
-          fill="rgba(203,153,126,0.17)"
-        />
+        <polygon points="11,76 189,76 187,94 13,94" fill="rgba(203,153,126,0.18)" />
 
         {/* Mewcha wordmark */}
         <text
@@ -456,7 +292,7 @@ export default function RitualCupPreview({
           fontFamily="var(--font-display)"
           fontStyle="italic"
           fontWeight="300"
-          fill="rgba(100,95,85,0.20)"
+          fill="rgba(90,86,76,0.28)"
           letterSpacing="0.12em"
         >
           mewcha
@@ -467,22 +303,18 @@ export default function RitualCupPreview({
           <g transform="translate(150,140) rotate(14)">
             <circle cx="0" cy="0" r="15"
               fill="none"
-              stroke="rgba(203,153,126,0.48)"
+              stroke="rgba(203,153,126,0.50)"
               strokeWidth="1"
               strokeDasharray="2,2.5"
             />
             <text x="0" y="-4"
-              textAnchor="middle"
-              fontSize="4"
-              fontFamily="var(--font-body)"
-              fontWeight="700"
-              letterSpacing="0.12em"
-              fill="rgba(203,153,126,0.65)"
+              textAnchor="middle" fontSize="4"
+              fontFamily="var(--font-body)" fontWeight="700"
+              letterSpacing="0.12em" fill="rgba(203,153,126,0.68)"
             >SEASONAL</text>
             <text x="0" y="6"
-              textAnchor="middle"
-              fontSize="8"
-              fill="rgba(203,153,126,0.52)"
+              textAnchor="middle" fontSize="8"
+              fill="rgba(203,153,126,0.54)"
             >✿</text>
           </g>
         )}
