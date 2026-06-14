@@ -20,7 +20,7 @@ const IMAGE_MAP: Record<string, string> = {
   'Strawberry Milk Tea':  '/boba/strawberry.png',
   'Lychee Milk Tea':      '/boba/lychee.png',
   'Mango Milk Tea':       '/boba/mango.png',
-  'Ceremonial Matcha':    '/boba/cer_matcha.png',
+  'Ceremonial Matcha':    '/boba/matcha.png',
 };
 
 function getImage(item: MenuItem) {
@@ -99,10 +99,10 @@ export default function DrinkModal({ itemId, onClose }: Props) {
   };
 
   const ritualParts = [
-    selectedSize?.label.split(' ')[0].toLowerCase(),
-    selectedIce?.label.toLowerCase(),
-    selectedSweetness?.label.toLowerCase(),
-    ...selectedToppings.map(t => t.label.toLowerCase()),
+    selectedSize?.label.split(' ')[0],
+    selectedIce?.label,
+    selectedSweetness?.label,
+    ...selectedToppings.map(t => t.label),
   ].filter(Boolean).join(' · ');
 
   return createPortal(
@@ -150,7 +150,7 @@ export default function DrinkModal({ itemId, onClose }: Props) {
 
               {ritualParts && (
                 <p className={styles.ritualSummary}>
-                  <em>your ritual:</em> {ritualParts}
+                  <em>your order</em> · {ritualParts}
                 </p>
               )}
             </div>

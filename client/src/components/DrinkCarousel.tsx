@@ -21,7 +21,7 @@ const DRINKS: Drink[] = [
     label:       'signature',
     tagline:     'stone-ground · oat milk · earthy finish',
     description: 'Stone-ground ceremonial grade matcha with steamed oat milk. Earthy, smooth, and beautifully green.',
-    image:       '/boba/cer_matcha.png',
+    image:       '/boba/matcha.png',
     bg:          '#3d4830',
     accent:      '#8fc47c',
     price:       '6.00',

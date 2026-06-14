@@ -26,7 +26,7 @@ const IMAGE_MAP: Record<string, string> = {
   'Strawberry Milk Tea':  '/boba/strawberry.png',
   'Lychee Milk Tea':      '/boba/lychee.png',
   'Mango Milk Tea':       '/boba/mango.png',
-  'Ceremonial Matcha':    '/boba/cer_matcha.png',
+  'Ceremonial Matcha':    '/boba/matcha.png',
 };
 
 const TAGS_MAP: Record<string, string[]> = {
