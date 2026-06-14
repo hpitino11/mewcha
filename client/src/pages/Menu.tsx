@@ -7,25 +7,40 @@ import EditorialKicker from '../components/shared/EditorialKicker';
 import styles from './Menu.module.css';
 
 const TABS = [
-  { label: 'All',      slug: 'all' },
-  { label: 'Matcha',   slug: 'matcha' },
-  { label: 'Boba',     slug: 'boba' },
-  { label: 'Coffee',   slug: 'coffee' },
-  { label: 'Seasonal', slug: 'seasonal' },
+  { label: 'All',    slug: 'all' },
+  { label: 'Matcha', slug: 'matcha' },
+  { label: 'Boba',   slug: 'boba' },
+  { label: 'Coffee', slug: 'coffee' },
 ];
 
 const IMAGE_MAP: Record<string, string> = {
-  'Ceremonial Matcha Latte': '/boba/cer_matcha.png',
-  'Brown Sugar Milk Tea':    '/boba/brown_sugar.png',
-  'Hojicha Cold Brew':       '/boba/matcha.png',
-  'Iced Americano':          '/boba/coffee.png',
-  'Taro Milk Tea':           '/boba/taro.png',
-  'Strawberry Lychee Boba':  '/boba/strawberry.png',
-  'Dirty Chai Latte':        '/boba/milk_tea.png',
+  'Matcha Latte':           '/boba/matcha.png',
+  'Brown Sugar Milk Tea':   '/boba/brown_sugar.png',
+  'Classic Milk Tea':       '/boba/milk_tea.png',
+  'Taro Milk Tea':          '/boba/taro.png',
+  'Strawberry Lychee Boba': '/boba/matcha.png',
+  'Honeydew Milk Tea':      '/boba/honeydew.png',
+  'Thai Milk Tea':          '/boba/thai_tea.png',
+  'Iced Americano':         '/boba/coffee.png',
+};
+
+const TAGS_MAP: Record<string, string[]> = {
+  'Matcha Latte':           ['EARTHY', 'CREAMY', 'CAFFEINE'],
+  'Brown Sugar Milk Tea':   ['SWEET', 'CREAMY', 'BOBA'],
+  'Classic Milk Tea':       ['CLASSIC', 'SWEET', 'CAFFEINE'],
+  'Taro Milk Tea':          ['CREAMY', 'SWEET', 'CAFFEINE'],
+  'Strawberry Lychee Boba': ['FRUITY', 'SWEET', 'FLORAL'],
+  'Honeydew Milk Tea':      ['FRUITY', 'LIGHT', 'CREAMY'],
+  'Thai Milk Tea':          ['BOLD', 'SWEET', 'CAFFEINE'],
+  'Iced Americano':         ['BOLD', 'BITTER', 'CAFFEINE'],
 };
 
 function getImage(item: MenuItem) {
   return item.image_url || IMAGE_MAP[item.name] || '/boba/shop.png';
+}
+
+function getTags(item: MenuItem) {
+  return TAGS_MAP[item.name] ?? [];
 }
 
 export default function Menu() {
@@ -77,10 +92,9 @@ export default function Menu() {
                   label={featured.is_seasonal ? 'seasonal pick' : 'neko pick'}
                   className={styles.spotlightKicker}
                 />
-                {featured.is_seasonal
-                  ? <span className={styles.spotlightBadge}>Seasonal</span>
-                  : <span className={styles.spotlightBadge}>Bestseller</span>
-                }
+                <span className={styles.spotlightBadge}>
+                  {featured.is_seasonal ? 'Seasonal' : 'Bestseller'}
+                </span>
               </div>
               <h2 className={styles.spotlightName}>{featured.name}</h2>
               <p className={styles.spotlightDesc}>{featured.description}</p>
@@ -92,11 +106,7 @@ export default function Menu() {
               </div>
             </div>
             <div className={styles.spotlightImgWrap}>
-              <img
-                src={getImage(featured)}
-                alt={featured.name}
-                className={styles.spotlightImg}
-              />
+              <img src={getImage(featured)} alt={featured.name} className={styles.spotlightImg} />
             </div>
           </Link>
         ) : (
@@ -145,27 +155,31 @@ export default function Menu() {
 }
 
 function MenuCard({ item }: { item: MenuItem }) {
+  const tags = getTags(item);
   return (
     <Link to={`/menu/${item.id}`} className={styles.card}>
       <div className={styles.cardImgWrap}>
-        <img
-          src={getImage(item)}
-          alt={item.name}
-          className={styles.cardImg}
-        />
         {item.is_bestseller && <span className={styles.cardBadge}>Bestseller</span>}
         {item.is_seasonal   && <span className={styles.cardBadgeSeasonal}>Seasonal</span>}
+        <img src={getImage(item)} alt={item.name} className={styles.cardImg} />
       </div>
 
       <div className={styles.cardBody}>
         <span className={styles.cardCat}>{item.category_name}</span>
         <h2 className={styles.cardName}>{item.name}</h2>
         <p className={styles.cardDesc}>{item.description}</p>
+
+        {tags.length > 0 && (
+          <div className={styles.cardTags}>
+            {tags.map(t => <span key={t} className={styles.cardTag}>{t}</span>)}
+          </div>
+        )}
+
         <div className={styles.cardFooter}>
           <span className={styles.cardPrice}>
             from ${parseFloat(item.base_price).toFixed(2)}
           </span>
-          <span className={styles.cardCta}>Order now</span>
+          <span className={styles.cardCta}>Add to Order +</span>
         </div>
       </div>
     </Link>
@@ -176,13 +190,13 @@ function SkeletonCard() {
   return (
     <div className={styles.card} style={{ pointerEvents: 'none' }}>
       <div className={styles.cardImgWrap}>
-        <div className={styles.skel} style={{ width: '100%', height: '100%', borderRadius: 'var(--radius-md)' }} />
+        <div className={styles.skel} style={{ width: '60%', height: '100%', borderRadius: 4 }} />
       </div>
       <div className={styles.cardBody}>
-        <div className={styles.skel} style={{ width: 56, height: 10, borderRadius: 2, marginBottom: 10 }} />
-        <div className={styles.skel} style={{ width: '70%', height: 18, borderRadius: 3, marginBottom: 6 }} />
-        <div className={styles.skel} style={{ width: '90%', height: 10, borderRadius: 3, marginBottom: 4 }} />
-        <div className={styles.skel} style={{ width: '60%', height: 10, borderRadius: 3 }} />
+        <div className={styles.skel} style={{ width: 56, height: 9, borderRadius: 2, marginBottom: 10 }} />
+        <div className={styles.skel} style={{ width: '75%', height: 20, borderRadius: 3, marginBottom: 6 }} />
+        <div className={styles.skel} style={{ width: '95%', height: 10, borderRadius: 3, marginBottom: 4 }} />
+        <div className={styles.skel} style={{ width: '70%', height: 10, borderRadius: 3 }} />
       </div>
     </div>
   );
