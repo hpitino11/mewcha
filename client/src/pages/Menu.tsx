@@ -14,25 +14,25 @@ const TABS = [
 ];
 
 const IMAGE_MAP: Record<string, string> = {
-  'Matcha Latte':           '/boba/matcha.png',
-  'Brown Sugar Milk Tea':   '/boba/brown_sugar.png',
-  'Classic Milk Tea':       '/boba/milk_tea.png',
-  'Taro Milk Tea':          '/boba/taro.png',
-  'Strawberry Lychee Boba': '/boba/matcha.png',
-  'Honeydew Milk Tea':      '/boba/honeydew.png',
-  'Thai Milk Tea':          '/boba/thai_tea.png',
-  'Iced Americano':         '/boba/coffee.png',
+  'Matcha Latte':         '/boba/matcha.png',
+  'Brown Sugar Milk Tea': '/boba/brown_sugar.png',
+  'Classic Milk Tea':     '/boba/milk_tea.png',
+  'Taro Milk Tea':        '/boba/taro.png',
+  'Matcha Boba Latte':    '/boba/matcha.png',
+  'Honeydew Milk Tea':    '/boba/honeydew.png',
+  'Thai Milk Tea':        '/boba/thai_tea.png',
+  'Iced Americano':       '/boba/coffee.png',
 };
 
 const TAGS_MAP: Record<string, string[]> = {
-  'Matcha Latte':           ['EARTHY', 'CREAMY', 'CAFFEINE'],
-  'Brown Sugar Milk Tea':   ['SWEET', 'CREAMY', 'BOBA'],
-  'Classic Milk Tea':       ['CLASSIC', 'SWEET', 'CAFFEINE'],
-  'Taro Milk Tea':          ['CREAMY', 'SWEET', 'CAFFEINE'],
-  'Strawberry Lychee Boba': ['FRUITY', 'SWEET', 'FLORAL'],
-  'Honeydew Milk Tea':      ['FRUITY', 'LIGHT', 'CREAMY'],
-  'Thai Milk Tea':          ['BOLD', 'SWEET', 'CAFFEINE'],
-  'Iced Americano':         ['BOLD', 'BITTER', 'CAFFEINE'],
+  'Matcha Latte':         ['EARTHY', 'CREAMY', 'CAFFEINE'],
+  'Brown Sugar Milk Tea': ['SWEET', 'CREAMY', 'BOBA'],
+  'Classic Milk Tea':     ['CLASSIC', 'SWEET', 'CAFFEINE'],
+  'Taro Milk Tea':        ['CREAMY', 'SWEET', 'CAFFEINE'],
+  'Matcha Boba Latte':    ['EARTHY', 'CREAMY', 'BOBA'],
+  'Honeydew Milk Tea':    ['FRUITY', 'LIGHT', 'CREAMY'],
+  'Thai Milk Tea':        ['BOLD', 'SWEET', 'CAFFEINE'],
+  'Iced Americano':       ['BOLD', 'BITTER', 'CAFFEINE'],
 };
 
 function getImage(item: MenuItem) {
@@ -110,7 +110,7 @@ export default function Menu() {
         <section className={styles.hero}>
           <div className={styles.heroLeft}>
             <EditorialKicker label="the menu" className={styles.kicker} />
-            <h1 className={styles.heroTitle}>Every cup,<br /><em>yours.</em></h1>
+            <h1 className={styles.heroTitle}>Every cup,<br />yours.</h1>
             <p className={styles.heroBody}>
               Thoughtful ingredients. Balanced flavors. Brewed for the way you like it.
             </p>
@@ -133,7 +133,7 @@ export default function Menu() {
                     className={styles.spotlightKicker}
                   />
                   <span className={styles.spotlightBadge}>
-                    {featured.is_seasonal ? 'Seasonal' : 'Bestseller'}
+                    {featured.is_seasonal ? 'Seasonal' : 'Neko Pick'}
                   </span>
                 </div>
                 <h2 className={styles.spotlightName}>{featured.name}</h2>
@@ -201,13 +201,19 @@ function MenuCard({ item }: { item: MenuItem }) {
   return (
     <Link to={`/menu/${item.id}`} className={styles.card}>
       <div className={styles.cardImgWrap}>
-        {item.is_bestseller && <span className={styles.cardBadge}>Bestseller</span>}
-        {item.is_seasonal   && <span className={styles.cardBadgeSeasonal}>Seasonal</span>}
-        <img src={getImage(item)} alt={item.name} className={styles.cardImg} />
+        {item.is_seasonal && <span className={styles.cardBadgeSeasonal}>Seasonal</span>}
+        <img
+          src={getImage(item)}
+          alt={item.name}
+          className={styles.cardImg}
+        />
       </div>
 
       <div className={styles.cardBody}>
-        <span className={styles.cardCat}>{item.category_name}</span>
+        <div className={styles.cardMeta}>
+          <span className={styles.cardCat}>{item.category_name}</span>
+          <span className={styles.cardNekoPick}>neko pick</span>
+        </div>
         <h2 className={styles.cardName}>{item.name}</h2>
         <p className={styles.cardDesc}>{item.description}</p>
 

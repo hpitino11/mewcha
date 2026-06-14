@@ -40,10 +40,6 @@
   margin-top: 0.25rem;
 }
 
-.heroTitle em {
-  font-style: italic;
-  color: var(--color-accent-sand);
-}
 
 .heroBody {
   font-size: var(--text-body);
@@ -177,19 +173,19 @@
 .heroSpotlight:hover .spotlightCta { background: var(--color-primary); }
 
 .spotlightImgWrap {
-  width: 220px;
+  width: 260px;
   flex-shrink: 0;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding: 1.25rem 1.5rem 0;
+  padding: 0.75rem 1rem 0;
   overflow: hidden;
   background: #e5dece;
 }
 
 .spotlightImg {
   width: 100%;
-  max-height: 260px;
+  max-height: 300px;
   object-fit: contain;
   object-position: bottom;
   filter: drop-shadow(0 10px 20px rgba(63,66,56,0.2));
@@ -266,20 +262,20 @@
 /* Image — left column */
 .cardImgWrap {
   position: relative;
-  width: 150px;
+  width: 175px;
   flex-shrink: 0;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   overflow: hidden;
-  padding: 0 0.5rem;
+  padding: 0 0.25rem;
   background: #e0d9c8;
 }
 
 .cardImg {
-  height: 110%;
+  height: 125%;
   width: auto;
-  max-width: 100%;
+  max-width: 95%;
   object-fit: contain;
   object-position: bottom center;
   transition: transform var(--t-spring);
@@ -287,7 +283,7 @@
 }
 
 .card:hover .cardImg {
-  transform: scale(1.06) translateY(-5px);
+  transform: scale(1.06) translateY(-6px);
 }
 
 .cardBadge,
@@ -315,6 +311,21 @@
 }
 
 /* Info — right column */
+.cardMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.1rem;
+}
+
+.cardNekoPick {
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(165,158,140,0.55);
+}
+
 .cardBody {
   flex: 1;
   display: flex;
