@@ -22,7 +22,8 @@ router.get('/', async (req, res) => {
     const items = await query;
     res.json(items);
   } catch (err) {
-    res.status(500).json({ error: 'Server error' });
+    console.error('Menu error:', err.message);
+    res.status(500).json({ error: err.message });
   }
 });
 
