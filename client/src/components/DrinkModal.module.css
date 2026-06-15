@@ -115,10 +115,10 @@
   margin-top: 0.125rem;
 }
 
-/* ── Drink image — floats on panel, no box ── */
+/* ── Drink image — fixed height so ritualSummary growing below never shifts it ── */
 .imgWrap {
-  flex: 1;
-  min-height: 0;
+  height: 210px;
+  flex-shrink: 0;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -350,8 +350,8 @@
     max-height: 50vh;
   }
 
-  .imgWrap { padding: 0.75rem 0 0.25rem; }
-  .drinkImg { max-height: 180px; }
+  .imgWrap { height: 150px; padding: 0.5rem 0 0.25rem; }
+  .drinkImg { max-height: 140px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

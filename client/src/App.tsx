@@ -5,6 +5,7 @@ import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import RitualLoader from './components/RitualLoader';
 import Landing from './pages/Landing';
 import Menu from './pages/Menu';
@@ -37,6 +38,7 @@ export default function App() {
         <CartProvider>
           {introVisible && <RitualLoader onComplete={handleIntroDone} />}
           <BrowserRouter>
+            <ScrollToTop />
             <Navbar />
             <Routes>
               <Route path="/"       element={<Landing />} />

@@ -1,22 +1,10 @@
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../lib/api';
 import type { MenuItem } from '../types';
 import EditorialKicker from '../components/shared/EditorialKicker';
 import DrinkModal from '../components/DrinkModal';
 import styles from './Menu.module.css';
-
-const TABS = [
-  { label: 'All',    slug: 'all' },
-  { label: 'Boba',   slug: 'boba' },
-  { label: 'Coffee', slug: 'coffee' },
-];
-
-const TAB_SPOTLIGHT: Record<string, { name: string; badge: 'seasonal' | 'bestseller' }> = {
-  boba:   { name: 'Taro Milk Tea',  badge: 'seasonal'   },
-  coffee: { name: 'Iced Americano', badge: 'bestseller' },
-};
 
 const IMAGE_MAP: Record<string, string> = {
   'Matcha Latte':         '/boba/matcha.png',
@@ -92,31 +80,14 @@ const DESCRIPTORS = [
 ];
 
 export default function Menu() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [active, setActive] = useState(searchParams.get('category') || 'all');
   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
 
   const { data: items, isLoading } = useQuery({
-    queryKey: ['menu', active],
-    queryFn: () => api.menu.list(active),
+    queryKey: ['menu'],
+    queryFn: () => api.menu.list(),
   });
 
-  useEffect(() => {
-    const c = searchParams.get('category');
-    if (c) setActive(c);
-  }, [searchParams]);
-
-  const handleTab = (slug: string) => {
-    setActive(slug);
-    slug === 'all' ? setSearchParams({}) : setSearchParams({ category: slug });
-  };
-
-  const spotlightCfg = TAB_SPOTLIGHT[active];
-  const featured = spotlightCfg
-    ? items?.find(i => i.name === spotlightCfg.name)
-    : active === 'all'
-      ? items?.find(i => i.is_bestseller || i.is_seasonal)
-      : undefined;
+  const featured = items?.find(i => i.is_bestseller || i.is_seasonal);
   const regular  = items?.filter(i => i !== featured) ?? [];
 
   return (
@@ -142,56 +113,39 @@ export default function Menu() {
               </div>
             </div>
 
-            {featured ? (() => {
-              const isSeasonal = spotlightCfg ? spotlightCfg.badge === 'seasonal' : featured.is_seasonal;
-              const kickerLabel = isSeasonal ? 'seasonal pick' : 'bestseller';
-              const badgeLabel  = isSeasonal ? 'Seasonal' : 'Bestseller';
-              return (
-                <button
-                  type="button"
-                  className={styles.heroSpotlight}
-                  onClick={() => setSelectedItemId(featured.id)}
-                >
-                  <div className={styles.spotlightContent}>
-                    <div className={styles.spotlightMeta}>
-                      <EditorialKicker label={kickerLabel} className={styles.spotlightKicker} />
-                      <span className={styles.spotlightBadge}>{badgeLabel}</span>
-                    </div>
-                    <h2 className={styles.spotlightName}>{featured.name}</h2>
-                    <p className={styles.spotlightDesc}>{featured.description}</p>
-                    <div className={styles.spotlightFooter}>
-                      <span className={styles.spotlightPrice}>
-                        from ${parseFloat(featured.base_price).toFixed(2)}
-                      </span>
-                      <span className={styles.spotlightCta}>Order now</span>
-                    </div>
+            {featured ? (
+              <button
+                type="button"
+                className={styles.heroSpotlight}
+                onClick={() => setSelectedItemId(featured.id)}
+              >
+                <div className={styles.spotlightContent}>
+                  <div className={styles.spotlightMeta}>
+                    <EditorialKicker
+                      label={featured.is_seasonal ? 'seasonal pick' : 'neko pick'}
+                      className={styles.spotlightKicker}
+                    />
+                    <span className={styles.spotlightBadge}>
+                      {featured.is_seasonal ? 'Seasonal' : 'Neko Pick'}
+                    </span>
                   </div>
-                  <div className={styles.spotlightImgWrap}>
-                    <img src={getImage(featured)} alt={featured.name} className={styles.spotlightImg} fetchPriority="high" />
+                  <h2 className={styles.spotlightName}>{featured.name}</h2>
+                  <p className={styles.spotlightDesc}>{featured.description}</p>
+                  <div className={styles.spotlightFooter}>
+                    <span className={styles.spotlightPrice}>
+                      from ${parseFloat(featured.base_price).toFixed(2)}
+                    </span>
+                    <span className={styles.spotlightCta}>Order now</span>
                   </div>
-                </button>
-              );
-            })() : (
+                </div>
+                <div className={styles.spotlightImgWrap}>
+                  <img src={getImage(featured)} alt={featured.name} className={styles.spotlightImg} fetchPriority="high" />
+                </div>
+              </button>
+            ) : (
               <div className={styles.heroSpotlightEmpty} />
             )}
           </section>
-
-          {/* ── Category tabs ── */}
-          <div className={styles.tabsWrap}>
-            <div className={styles.tabs} role="tablist" aria-label="Menu categories">
-              {TABS.map(tab => (
-                <button
-                  key={tab.slug}
-                  role="tab"
-                  aria-selected={active === tab.slug}
-                  className={`${styles.tab} ${active === tab.slug ? styles.tabActive : ''}`}
-                  onClick={() => handleTab(tab.slug)}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-          </div>
 
           {/* ── Grid ── */}
           {isLoading ? (
@@ -200,10 +154,7 @@ export default function Menu() {
             </div>
           ) : items?.length === 0 ? (
             <div className={styles.empty}>
-              <p>No drinks in this category yet.</p>
-              <button className={styles.emptyLink} onClick={() => handleTab('all')}>
-                See all drinks
-              </button>
+              <p>No drinks available yet.</p>
             </div>
           ) : (
             <div className={styles.grid}>
