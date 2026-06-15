@@ -115,10 +115,11 @@
   margin-top: 0.125rem;
 }
 
-/* ── Drink image — fixed height so ritualSummary growing below never shifts it ── */
+/* ── Drink image ── */
 .imgWrap {
-  height: 210px;
-  flex-shrink: 0;
+  flex: 1;
+  min-height: 130px;
+  overflow: hidden;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -126,7 +127,11 @@
 }
 
 .drinkImg {
-  max-height: 280px;
+  /* height fills the wrap; max-height caps it so it doesn't look huge when the
+     panel is tall. align-items: flex-end keeps the cup bottom anchored, so if
+     the wrap shrinks the cup clips from the top rather than moving. */
+  height: 100%;
+  max-height: 260px;
   width: auto;
   max-width: 88%;
   object-fit: contain;
@@ -350,8 +355,8 @@
     max-height: 50vh;
   }
 
-  .imgWrap { height: 150px; padding: 0.5rem 0 0.25rem; }
-  .drinkImg { max-height: 140px; }
+  .imgWrap { min-height: 100px; padding: 0.5rem 0 0.25rem; }
+  .drinkImg { max-height: 160px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
