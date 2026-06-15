@@ -144,7 +144,7 @@ export default function DrinkModal({ itemId, onClose }: Props) {
               </div>
 
               <div className={styles.imgWrap}>
-                <img src={getImage(item)} alt={item.name} className={styles.drinkImg} />
+                <img src={getImage(item)} alt={item.name} className={styles.drinkImg} loading="lazy" decoding="async" />
               </div>
 
               {ritualParts && (

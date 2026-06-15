@@ -66,6 +66,7 @@ export default function MatchaPoster() {
           alt="Ceremonial grade matcha being prepared"
           className={styles.img}
           loading="lazy"
+          decoding="async"
         />
       </div>
 

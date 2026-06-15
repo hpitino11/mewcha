@@ -9,10 +9,14 @@ import styles from './Menu.module.css';
 
 const TABS = [
   { label: 'All',    slug: 'all' },
-  { label: 'Matcha', slug: 'matcha' },
   { label: 'Boba',   slug: 'boba' },
   { label: 'Coffee', slug: 'coffee' },
 ];
+
+const TAB_SPOTLIGHT: Record<string, { name: string; badge: 'seasonal' | 'bestseller' }> = {
+  boba:   { name: 'Taro Milk Tea',  badge: 'seasonal'   },
+  coffee: { name: 'Iced Americano', badge: 'bestseller' },
+};
 
 const IMAGE_MAP: Record<string, string> = {
   'Matcha Latte':         '/boba/matcha.png',
@@ -107,7 +111,12 @@ export default function Menu() {
     slug === 'all' ? setSearchParams({}) : setSearchParams({ category: slug });
   };
 
-  const featured = items?.find(i => i.is_bestseller || i.is_seasonal);
+  const spotlightCfg = TAB_SPOTLIGHT[active];
+  const featured = spotlightCfg
+    ? items?.find(i => i.name === spotlightCfg.name)
+    : active === 'all'
+      ? items?.find(i => i.is_bestseller || i.is_seasonal)
+      : undefined;
   const regular  = items?.filter(i => i !== featured) ?? [];
 
   return (
@@ -133,36 +142,36 @@ export default function Menu() {
               </div>
             </div>
 
-            {featured && active === 'all' ? (
-              <button
-                type="button"
-                className={styles.heroSpotlight}
-                onClick={() => setSelectedItemId(featured.id)}
-              >
-                <div className={styles.spotlightContent}>
-                  <div className={styles.spotlightMeta}>
-                    <EditorialKicker
-                      label={featured.is_seasonal ? 'seasonal pick' : 'neko pick'}
-                      className={styles.spotlightKicker}
-                    />
-                    <span className={styles.spotlightBadge}>
-                      {featured.is_seasonal ? 'Seasonal' : 'Neko Pick'}
-                    </span>
+            {featured ? (() => {
+              const isSeasonal = spotlightCfg ? spotlightCfg.badge === 'seasonal' : featured.is_seasonal;
+              const kickerLabel = isSeasonal ? 'seasonal pick' : 'bestseller';
+              const badgeLabel  = isSeasonal ? 'Seasonal' : 'Bestseller';
+              return (
+                <button
+                  type="button"
+                  className={styles.heroSpotlight}
+                  onClick={() => setSelectedItemId(featured.id)}
+                >
+                  <div className={styles.spotlightContent}>
+                    <div className={styles.spotlightMeta}>
+                      <EditorialKicker label={kickerLabel} className={styles.spotlightKicker} />
+                      <span className={styles.spotlightBadge}>{badgeLabel}</span>
+                    </div>
+                    <h2 className={styles.spotlightName}>{featured.name}</h2>
+                    <p className={styles.spotlightDesc}>{featured.description}</p>
+                    <div className={styles.spotlightFooter}>
+                      <span className={styles.spotlightPrice}>
+                        from ${parseFloat(featured.base_price).toFixed(2)}
+                      </span>
+                      <span className={styles.spotlightCta}>Order now</span>
+                    </div>
                   </div>
-                  <h2 className={styles.spotlightName}>{featured.name}</h2>
-                  <p className={styles.spotlightDesc}>{featured.description}</p>
-                  <div className={styles.spotlightFooter}>
-                    <span className={styles.spotlightPrice}>
-                      from ${parseFloat(featured.base_price).toFixed(2)}
-                    </span>
-                    <span className={styles.spotlightCta}>Order now</span>
+                  <div className={styles.spotlightImgWrap}>
+                    <img src={getImage(featured)} alt={featured.name} className={styles.spotlightImg} fetchPriority="high" />
                   </div>
-                </div>
-                <div className={styles.spotlightImgWrap}>
-                  <img src={getImage(featured)} alt={featured.name} className={styles.spotlightImg} />
-                </div>
-              </button>
-            ) : (
+                </button>
+              );
+            })() : (
               <div className={styles.heroSpotlightEmpty} />
             )}
           </section>
@@ -198,7 +207,7 @@ export default function Menu() {
             </div>
           ) : (
             <div className={styles.grid}>
-              {(featured && active === 'all' ? regular : items ?? []).map(item => (
+              {(featured ? regular : items ?? []).map(item => (
                 <MenuCard key={item.id} item={item} onClick={() => setSelectedItemId(item.id)} />
               ))}
             </div>
@@ -224,6 +233,8 @@ function MenuCard({ item, onClick }: { item: MenuItem; onClick: () => void }) {
           src={getImage(item)}
           alt={item.name}
           className={styles.cardImg}
+          loading="lazy"
+          decoding="async"
         />
       </div>
 
