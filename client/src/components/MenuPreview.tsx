@@ -50,9 +50,6 @@ const TOPPINGS = [
   { name: 'Aloe Vera',       price: '+$0.75' },
 ];
 
-const SIZES    = ['Small', 'Medium  +$0.50', 'Large  +$1.00'];
-const ICE      = ['None', 'Light', 'Regular', 'Extra'];
-const SWEETNESS = ['0%', '25%', '50%', '75%', '100%'];
 
 export default function MenuPreview() {
   const ref = useRef<HTMLElement>(null);
@@ -81,7 +78,7 @@ export default function MenuPreview() {
           <h2 className={styles.title}>
             Take a quiet look at the menu.
           </h2>
-          <p className={styles.sub}>All drinks made to order. Every size, ice level, and sweetness your way.</p>
+          <p className={styles.sub}>All drinks made to order. Add toppings your way.</p>
         </div>
 
         {/* Menu container — catGrid + addons unified */}
@@ -123,33 +120,6 @@ export default function MenuPreview() {
                 <span key={t.name} className={styles.addonPill}>
                   {t.name} <span className={styles.addonPrice}>{t.price}</span>
                 </span>
-              ))}
-            </div>
-          </div>
-          <div className={styles.addonsDivider} />
-          <div className={styles.addonsRow}>
-            <span className={styles.addonsLabel}>size</span>
-            <div className={styles.addonsPills}>
-              {SIZES.map(s => (
-                <span key={s} className={styles.addonPill}>{s}</span>
-              ))}
-            </div>
-          </div>
-          <div className={styles.addonsDivider} />
-          <div className={styles.addonsRow}>
-            <span className={styles.addonsLabel}>ice</span>
-            <div className={styles.addonsPills}>
-              {ICE.map(s => (
-                <span key={s} className={styles.addonPill}>{s}</span>
-              ))}
-            </div>
-          </div>
-          <div className={styles.addonsDivider} />
-          <div className={styles.addonsRow}>
-            <span className={styles.addonsLabel}>sweetness</span>
-            <div className={styles.addonsPills}>
-              {SWEETNESS.map(s => (
-                <span key={s} className={styles.addonPill}>{s}</span>
               ))}
             </div>
           </div>

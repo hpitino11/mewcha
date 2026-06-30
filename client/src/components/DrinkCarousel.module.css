@@ -303,9 +303,19 @@
    Only 2 breakpoints — fluid values handle everything in between.
 ════════════════════════════════════════════════════════ */
 
+/* Static image — shown on mobile only */
+.staticImgWrap {
+  display: none;
+}
+
 /* Stack vertically when the text column gets too narrow */
 @media (max-width: 860px) {
-  .cupsCol {
+  /* Hide the animated carousel on mobile */
+  .cupsCol { display: none; }
+
+  /* Show the static image instead */
+  .staticImgWrap {
+    display: flex;
     position: absolute;
     top: 0;
     left: 0;
@@ -314,11 +324,19 @@
     height: 52vh;
     align-items: flex-end;
     justify-content: center;
+    overflow: hidden;
+    pointer-events: none;
   }
 
-  .cupsTrack {
-    --slot-w: clamp(200px, 44vw, 380px);
-    --slot-h: clamp(280px, 62vw, 530px);
+  .staticImg {
+    height: 100%;
+    max-height: clamp(280px, 62vw, 530px);
+    width: auto;
+    max-width: 80vw;
+    object-fit: contain;
+    object-position: bottom center;
+    filter: drop-shadow(0 clamp(20px, 4vh, 40px) clamp(32px, 6vh, 60px) rgba(0, 0, 0, 0.38))
+            drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
   }
 
   .inner {
@@ -332,24 +350,51 @@
   .textCol {
     width: 100%;
     max-width: 52ch;
+    align-items: center;
+    text-align: center;
+  }
+
+  .textContent {
+    align-items: center;
+  }
+
+  .counter {
+    justify-content: center;
+  }
+
+  .description {
+    max-width: 100%;
+  }
+
+  .descRow {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .drinkStamp {
+    margin-top: 0;
+  }
+
+  .actions {
+    justify-content: center;
+  }
+
+  .controls {
+    justify-content: center;
   }
 }
 
 /* Very small screens */
 @media (max-width: 480px) {
-  .cupsCol {
-    height: 46vh;
-  }
+  .staticImgWrap { height: 46vh; }
 
-  .cupsTrack {
-    --slot-w: clamp(160px, 56vw, 280px);
-    --slot-h: clamp(220px, 78vw, 390px);
+  .staticImg {
+    max-height: clamp(220px, 78vw, 390px);
   }
 
   .inner {
     padding-top: 46vh;
   }
-
 }
 
 @media (prefers-reduced-motion: reduce) {

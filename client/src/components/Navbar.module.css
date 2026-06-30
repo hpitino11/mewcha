@@ -165,5 +165,15 @@
 .authBtn:hover { color: var(--color-primary-dark); }
 
 @media (max-width: 640px) {
-  .links { gap: clamp(0.875rem, 3vw, 1.5rem); }
+  .links { gap: clamp(0.75rem, 3vw, 1.5rem); }
+  .logoText { font-size: 1.125rem; }
+  .actions { gap: 0.875rem; }
+}
+
+@media (max-width: 400px) {
+  .logoIcon { width: 40px; height: 40px; }
+  .links { gap: 0.6rem; }
+  .link { font-size: 0.68rem; }
+  .actions { gap: 0.625rem; }
+  .divider { display: none; }
 }

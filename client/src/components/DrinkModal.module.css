@@ -173,6 +173,7 @@
   align-items: baseline;
   justify-content: space-between;
   padding-bottom: 1.25rem;
+  padding-right: 1.5rem; /* keep price clear of the X close button */
   border-bottom: 1px solid rgba(63, 66, 56, 0.1);
   margin-bottom: 1.625rem;
   flex-shrink: 0;

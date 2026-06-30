@@ -176,7 +176,7 @@ export default function DrinkCarousel() {
     >
       <div className={styles.noise} aria-hidden="true" />
 
-      {/* ════ Right: image carousel ════ */}
+      {/* ════ Right: image carousel (desktop) ════ */}
       <div className={styles.cupsCol} aria-hidden="true">
         <div className={styles.cupsTrack}>
           {DRINKS.map((d, i) => {
@@ -203,6 +203,23 @@ export default function DrinkCarousel() {
             );
           })}
         </div>
+      </div>
+
+      {/* ════ Static image (mobile only) ════ */}
+      <div className={styles.staticImgWrap} aria-hidden="true">
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={active}
+            src={drink.image}
+            alt={drink.name}
+            className={styles.staticImg}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.28 }}
+            draggable={false}
+          />
+        </AnimatePresence>
       </div>
 
       <div className={styles.inner}>
